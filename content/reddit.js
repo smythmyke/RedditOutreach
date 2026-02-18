@@ -38,8 +38,41 @@
   function loadHistory(callback) {
     chrome.storage.local.get(['ro_history'], (result) => {
       historyCache = result.ro_history || {};
+      pruneHistory();
       if (callback) callback();
     });
+  }
+
+  function pruneHistory() {
+    const MAX_ENTRIES = 500;
+    const MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000; // 90 days
+    const now = Date.now();
+    const keys = Object.keys(historyCache);
+    let changed = false;
+
+    // Remove entries older than 90 days
+    for (let i = 0; i < keys.length; i++) {
+      const entry = historyCache[keys[i]];
+      if (entry && entry.timestamp && (now - entry.timestamp) > MAX_AGE_MS) {
+        delete historyCache[keys[i]];
+        changed = true;
+      }
+    }
+
+    // If still over max, remove oldest entries
+    const remaining = Object.keys(historyCache);
+    if (remaining.length > MAX_ENTRIES) {
+      remaining.sort((a, b) => (historyCache[a].timestamp || 0) - (historyCache[b].timestamp || 0));
+      const toRemove = remaining.length - MAX_ENTRIES;
+      for (let i = 0; i < toRemove; i++) {
+        delete historyCache[remaining[i]];
+      }
+      changed = true;
+    }
+
+    if (changed) {
+      chrome.storage.local.set({ ro_history: historyCache });
+    }
   }
 
   function saveToHistory(entry) {
@@ -348,6 +381,10 @@
           <div class="ro-panel-subreddit"></div>
           <div class="ro-panel-title"></div>
         </div>
+        <div class="ro-credits-badge" title="Credits remaining">
+          <span class="ro-credits-icon">&#9679;</span>
+          <span class="ro-credits-count">--</span>
+        </div>
         <button class="ro-close-btn">&times;</button>
       </div>
       <div class="ro-panel-body">
@@ -357,6 +394,7 @@
           <select class="ro-project-select">${projectOptionsHtml}</select>
         </div>
         <div class="ro-rules-warning" style="display:none"></div>
+        <div class="ro-credits-warning" style="display:none"></div>
         <div class="ro-loading-state" style="display:none">
           <div class="ro-spinner"></div>
           <span>Generating responses...</span>
@@ -453,6 +491,33 @@
     } else {
       warningEl.style.display = 'none';
     }
+  }
+
+  function updatePanelCredits() {
+    if (!panel) return;
+    chrome.runtime.sendMessage({ type: 'CHECK_CREDITS' }, (resp) => {
+      if (chrome.runtime.lastError) return;
+      const badge = panel.querySelector('.ro-credits-count');
+      const warning = panel.querySelector('.ro-credits-warning');
+      if (resp && resp.success && resp.credits) {
+        const avail = resp.credits.available;
+        badge.textContent = avail;
+        badge.parentElement.title = avail + ' credits remaining';
+        if (avail <= 0) {
+          badge.parentElement.classList.add('ro-credits-zero');
+          warning.textContent = 'No credits remaining. Purchase more from the toolbar popup to continue generating.';
+          warning.style.display = 'block';
+        } else if (avail <= 5) {
+          badge.parentElement.classList.add('ro-credits-low');
+          badge.parentElement.classList.remove('ro-credits-zero');
+          warning.textContent = 'Low credits (' + avail + ' remaining). Purchase more from the toolbar popup.';
+          warning.style.display = 'block';
+        } else {
+          badge.parentElement.classList.remove('ro-credits-low', 'ro-credits-zero');
+          warning.style.display = 'none';
+        }
+      }
+    });
   }
 
   function switchTone(tone) {
@@ -558,6 +623,7 @@
     }
 
     updateRulesWarning();
+    updatePanelCredits();
 
     backdrop.classList.add('ro-visible');
     requestAnimationFrame(() => panel.classList.add('ro-visible'));
@@ -599,14 +665,20 @@
     }
   }
 
+  let generateCooldown = false;
+
   function generateAllResponses(postData) {
+    if (generateCooldown) {
+      showToast('Please wait before regenerating', 'error');
+      return;
+    }
     setLoading(true);
 
     const projectId = panel.querySelector('.ro-project-select').value;
 
-    // Include reply context if replying to a comment
+    // Include reply context if replying to a comment (anonymize author)
     const replyTo = replyTarget
-      ? { author: replyTarget.author, text: replyTarget.text }
+      ? { author: 'User', text: replyTarget.text }
       : null;
 
     try {
@@ -624,7 +696,16 @@
           }
 
           responses = response.responses;
-          switchTone(CONFIG.TONES[0]);
+          // Use saved default tone if available, otherwise first tone
+          chrome.storage.local.get(['ro_default_tone'], (r) => {
+            const defaultTone = r.ro_default_tone;
+            const tone = (defaultTone && CONFIG.TONES.includes(defaultTone)) ? defaultTone : CONFIG.TONES[0];
+            switchTone(tone);
+          });
+          updatePanelCredits();
+          // 5s cooldown before allowing regeneration
+          generateCooldown = true;
+          setTimeout(() => { generateCooldown = false; }, 5000);
         }
       );
     } catch (e) {
@@ -660,11 +741,7 @@
           replyArea.value = text;
           replyArea.dispatchEvent(new Event('input', { bubbles: true }));
           closePanel();
-          setTimeout(() => {
-            const saveBtn = replyCommentEl.querySelector('.usertext button[type="submit"], .save');
-            if (saveBtn) saveBtn.click();
-            showToast('Reply submitted');
-          }, 300);
+          showToast('Reply draft inserted — review and submit when ready');
           return;
         }
         navigator.clipboard.writeText(text).then(() => {
@@ -682,12 +759,7 @@
       commentArea.value = text;
       commentArea.dispatchEvent(new Event('input', { bubbles: true }));
       closePanel();
-      setTimeout(() => {
-        const form = commentArea.closest('form');
-        const saveBtn = form ? form.querySelector('button[type="submit"], .save') : null;
-        if (saveBtn) saveBtn.click();
-        showToast('Comment submitted');
-      }, 300);
+      showToast('Draft inserted — review and submit when ready');
     } else {
       navigator.clipboard.writeText(text).then(() => {
         showToast('Could not find comment box — copied to clipboard', 'error');
@@ -775,13 +847,7 @@
         clearInterval(pollForComposer);
         insertTextIntoEditor(editable, text);
         closePanel();
-        setTimeout(() => {
-          if (clickRedditSubmitButton(editable)) {
-            showToast('Comment submitted');
-          } else {
-            showToast('Draft inserted — could not find submit button', 'error');
-          }
-        }, 500);
+        showToast('Draft inserted — review and submit when ready');
         return;
       }
 
@@ -798,13 +864,7 @@
           mdTextarea.value = text;
           mdTextarea.dispatchEvent(new Event('input', { bubbles: true }));
           closePanel();
-          setTimeout(() => {
-            if (clickRedditSubmitButton(mdTextarea)) {
-              showToast('Comment submitted');
-            } else {
-              showToast('Draft inserted — could not find submit button', 'error');
-            }
-          }, 500);
+          showToast('Draft inserted — review and submit when ready');
           return;
         }
       }
@@ -828,30 +888,6 @@
     document.execCommand('insertText', false, text);
   }
 
-  function clickRedditSubmitButton(nearElement) {
-    let container = nearElement;
-    for (let i = 0; i < 10 && container; i++) {
-      const submitBtn = container.querySelector('button[slot="submit-button"]') ||
-        container.querySelector('button[type="submit"]') ||
-        container.querySelector('button.comment-submit-button');
-      if (submitBtn) {
-        submitBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
-        return true;
-      }
-      container = container.parentElement;
-    }
-
-    const allSubmit = document.querySelectorAll('button[slot="submit-button"], shreddit-composer button[type="submit"]');
-    for (const btn of allSubmit) {
-      if (btn.offsetParent !== null && !btn.disabled) {
-        btn.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   function fillNewRedditReply(text, commentEl) {
     clickCommentReplyButton(commentEl);
 
@@ -867,13 +903,7 @@
         clearInterval(pollForReply);
         insertTextIntoEditor(editable, text);
         closePanel();
-        setTimeout(() => {
-          if (clickRedditSubmitButton(editable)) {
-            showToast('Reply submitted');
-          } else {
-            showToast('Reply draft inserted — could not find submit button', 'error');
-          }
-        }, 500);
+        showToast('Reply draft inserted — review and submit when ready');
         return;
       }
 

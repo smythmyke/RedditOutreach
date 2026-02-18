@@ -225,6 +225,50 @@ shreddit-comment.ro-highlight {
   border-color: #f56040;
 }
 
+/* Credits Badge */
+.ro-credits-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 12px;
+  padding: 3px 10px 3px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #818384;
+  flex-shrink: 0;
+}
+
+.ro-credits-icon {
+  font-size: 8px;
+  color: #46d160;
+}
+
+.ro-credits-badge.ro-credits-low .ro-credits-icon {
+  color: #e0a030;
+}
+
+.ro-credits-badge.ro-credits-zero .ro-credits-icon {
+  color: #ff4444;
+}
+
+.ro-credits-badge.ro-credits-zero {
+  border-color: #5a2020;
+}
+
+/* Credits Warning */
+.ro-credits-warning {
+  background: #2a1f0f;
+  border: 1px solid #5a4020;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #e0a030;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
 /* Rules Warning */
 .ro-rules-warning {
   background: #2a1f0f;

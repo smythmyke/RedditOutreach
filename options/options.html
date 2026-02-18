@@ -31,6 +31,11 @@
       font-weight: 600;
       margin-bottom: 6px;
     }
+    .field-desc {
+      font-size: 12px;
+      color: #818384;
+      margin-bottom: 8px;
+    }
     select {
       width: 100%;
       background: #272729;
@@ -75,15 +80,29 @@
 
   <div class="field">
     <label for="tone">Default Tone</label>
+    <p class="field-desc">The tone tab selected first when generating responses.</p>
     <select id="tone">
       <option value="friendly">Friendly</option>
       <option value="casual">Casual</option>
       <option value="professional">Professional</option>
+      <option value="comical">Comical</option>
+      <option value="short">Short</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="project">Default Project</label>
+    <p class="field-desc">Pre-selected product when opening the panel. Can be changed per-post.</p>
+    <select id="project">
+      <option value="bulklistingpro">BulkListingPro</option>
+      <option value="govtoolspro">GovToolsPro</option>
+      <option value="patentsearch">Patent Search Generator</option>
+      <option value="none">No Product</option>
     </select>
   </div>
 
   <button id="save">Save</button>
-  <div class="status" id="status">Saved</div>
+  <div class="status" id="status">Settings saved</div>
 
   <script src="options.js"></script>
 </body>

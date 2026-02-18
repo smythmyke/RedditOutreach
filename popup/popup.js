@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const signInBtn = document.getElementById('sign-in');
   const signOutBtn = document.getElementById('sign-out');
   const buyCreditsBtn = document.getElementById('buy-credits');
+  const creditsWarning = document.getElementById('credits-warning');
   const versionEl = document.getElementById('version');
 
   // Show version
@@ -53,14 +54,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (credits && credits.available !== undefined) {
       creditCount.textContent = credits.available;
+      updateCreditsWarning(credits.available);
     }
 
     // Fetch fresh credits
     chrome.runtime.sendMessage({ type: 'CHECK_CREDITS' }).then(resp => {
       if (resp && resp.success && resp.credits) {
         creditCount.textContent = resp.credits.available;
+        updateCreditsWarning(resp.credits.available);
       }
     }).catch(() => {});
+  }
+
+  function updateCreditsWarning(available) {
+    if (available <= 0) {
+      creditsWarning.textContent = 'No credits remaining. Purchase more to generate comments.';
+      creditsWarning.classList.remove('hidden');
+    } else if (available <= 5) {
+      creditsWarning.textContent = 'Low credits (' + available + ' remaining).';
+      creditsWarning.classList.remove('hidden');
+    } else {
+      creditsWarning.classList.add('hidden');
+    }
   }
 
   function showLoggedOut() {

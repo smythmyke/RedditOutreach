@@ -1,13 +1,19 @@
 const toneSelect = document.getElementById('tone');
+const projectSelect = document.getElementById('project');
 const saveBtn = document.getElementById('save');
 const statusEl = document.getElementById('status');
 
-chrome.storage.local.get(['ro_tone'], (result) => {
-  if (result.ro_tone) toneSelect.value = result.ro_tone;
+// Load saved values
+chrome.storage.local.get(['ro_default_tone', 'ro_project'], (result) => {
+  if (result.ro_default_tone) toneSelect.value = result.ro_default_tone;
+  if (result.ro_project) projectSelect.value = result.ro_project;
 });
 
 saveBtn.addEventListener('click', () => {
-  chrome.storage.local.set({ ro_tone: toneSelect.value }, () => {
+  chrome.storage.local.set({
+    ro_default_tone: toneSelect.value,
+    ro_project: projectSelect.value
+  }, () => {
     statusEl.classList.add('show');
     setTimeout(() => statusEl.classList.remove('show'), 2000);
   });

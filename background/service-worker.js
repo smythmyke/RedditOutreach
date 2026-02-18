@@ -1,6 +1,7 @@
 importScripts('../config.js');
 importScripts('../services/auth.js');
 importScripts('../services/storage.js');
+importScripts('../services/credits.js');
 
 // --- Auth token helper ---
 
@@ -31,6 +32,73 @@ async function getApiHeaders() {
   return headers;
 }
 
+// --- API fetch with 401 retry ---
+
+async function apiFetch(endpoint, options = {}) {
+  const headers = await getApiHeaders();
+  const mergedOptions = { ...options, headers: { ...headers, ...options.headers } };
+
+  const response = await fetch(CONFIG.API_URL + endpoint, mergedOptions);
+
+  // Auto-retry on 401 with silent token refresh
+  if (response.status === 401) {
+    try {
+      const token = await new Promise((resolve, reject) => {
+        chrome.identity.getAuthToken({ interactive: false }, (token) => {
+          if (chrome.runtime.lastError || !token) {
+            reject(new Error('Token refresh failed'));
+            return;
+          }
+          resolve(token);
+        });
+      });
+
+      // Re-register with backend
+      const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (userInfoRes.ok) {
+        const userInfo = await userInfoRes.json();
+        const authRes = await fetch(CONFIG.API_URL + '/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', ...getExtensionHeaders() },
+          body: JSON.stringify({ googleToken: token, email: userInfo.email, name: userInfo.name, picture: userInfo.picture })
+        });
+        if (authRes.ok) {
+          const authData = await authRes.json();
+          const newToken = authData.token || token;
+          await chrome.storage.local.set({
+            redditoutreach_token: newToken,
+            authToken: newToken
+          });
+          mergedOptions.headers['Authorization'] = `Bearer ${newToken}`;
+          return fetch(CONFIG.API_URL + endpoint, mergedOptions);
+        }
+      }
+    } catch (refreshErr) {
+      // Refresh failed — throw session expired
+    }
+    throw new Error('Session expired — please sign in again');
+  }
+
+  return response;
+}
+
+// --- Install handler (onboarding) ---
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    chrome.storage.local.set({
+      redditoutreach_installed: Date.now(),
+      ro_project: 'none'
+    });
+    // Open welcome tab on first install
+    chrome.tabs.create({
+      url: chrome.runtime.getURL('docs/welcome.html')
+    });
+  }
+});
+
 // --- Message handler ---
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -48,9 +116,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       authService.checkAuth()
         .then(result => {
           if (result.authenticated) {
-            chrome.storage.local.get(['redditoutreach_credits'], (data) => {
-              sendResponse({ ...result, credits: data.redditoutreach_credits || null });
-            });
+            creditsService.getBalance()
+              .then(credits => sendResponse({ ...result, credits }))
+              .catch(() => sendResponse({ ...result, credits: null }));
           } else {
             sendResponse(result);
           }
@@ -61,8 +129,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case 'SIGN_IN':
       authService.signIn()
         .then(user => {
-          // Fetch initial credits after sign-in
-          fetchCredits().then(credits => {
+          creditsService.getBalance(true).then(credits => {
             sendResponse({ success: true, user, credits });
           }).catch(() => {
             sendResponse({ success: true, user, credits: null });
@@ -73,97 +140,82 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     case 'SIGN_OUT':
       authService.signOut()
-        .then(() => sendResponse({ success: true }))
+        .then(() => {
+          creditsService.invalidateCache();
+          sendResponse({ success: true });
+        })
         .catch(err => sendResponse({ success: false, error: err.message }));
       return true;
 
     case 'CHECK_CREDITS':
-      fetchCredits()
+      creditsService.getBalance(true)
         .then(credits => sendResponse({ success: true, credits }))
         .catch(() => sendResponse({ success: false, credits: null }));
       return true;
 
     case 'BUY_CREDITS':
-      handleBuyCredits()
+      creditsService.createCheckoutSession(message.packId || 'standard')
         .then(result => sendResponse(result))
         .catch(err => sendResponse({ error: err.message }));
       return true;
   }
 });
 
-// --- Credits ---
+// --- Generation with credit deduction ---
 
-async function fetchCredits() {
-  const headers = await getApiHeaders();
-  const res = await fetch(CONFIG.API_URL + '/api/user/credits', { headers });
-
-  if (!res.ok) {
-    // Fall back to cached credits
-    const cached = await chrome.storage.local.get(['redditoutreach_credits']);
-    return cached.redditoutreach_credits || { available: 0 };
-  }
-
-  const data = await res.json();
-  await chrome.storage.local.set({ redditoutreach_credits: data });
-  return data;
-}
-
-async function handleBuyCredits() {
-  const headers = await getApiHeaders();
-
-  // Get available packs
-  const packsRes = await fetch(CONFIG.API_URL + '/api/stripe/credit-packs', { headers });
-  const packs = packsRes.ok ? await packsRes.json() : null;
-
-  // Default to first pack if available, or a standard pack ID
-  const packId = (packs && packs.length > 0) ? packs[0].id : 'standard';
-
-  const res = await fetch(CONFIG.API_URL + '/api/stripe/create-credit-checkout', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      packId,
-      successUrl: 'https://business-search-api-815700675676.us-central1.run.app/api/v1/health',
-      cancelUrl: 'https://www.reddit.com'
-    })
-  });
-
-  if (!res.ok) throw new Error('Failed to create checkout session');
-  return await res.json();
-}
-
-// --- Generation ---
+const CREDITS_PER_GENERATION = 1;
 
 async function handleGenerateAll(postData, projectId, subredditRules, replyTo) {
-  // Check auth first
+  // Check auth
   const token = await getAuthToken();
   if (!token) {
     throw new Error('Sign in required to generate comments');
   }
 
-  const payload = {
-    subreddit: postData.subreddit,
-    title: postData.title,
-    body: postData.body || '',
-    comments: postData.comments || '',
-    tones: CONFIG.TONES,
-    projectId: projectId || 'none',
-    subredditRules: subredditRules || ''
-  };
-
-  // Include reply context if replying to a specific comment
-  if (replyTo) {
-    payload.replyTo = replyTo;
+  // Deduct credits before generation
+  const creditResult = await creditsService.useCredits(CREDITS_PER_GENERATION, 'reddit_generate');
+  if (!creditResult.success) {
+    if (creditResult.error === 'insufficient_credits') {
+      throw new Error(`Insufficient credits (${creditResult.creditsRemaining} remaining). Purchase more to continue.`);
+    }
+    if (creditResult.error === 'not_authenticated') {
+      throw new Error('Session expired — please sign in again');
+    }
+    throw new Error('Failed to verify credits. Please try again.');
   }
 
-  const headers = await getApiHeaders();
+  // Truncate fields to prevent oversized payloads
+  function truncate(str, max) {
+    return typeof str === 'string' ? str.slice(0, max) : '';
+  }
+
+  const safeProject = CONFIG.PROJECTS.some(p => p.id === projectId) ? projectId : 'none';
+
+  // Build payload
+  const payload = {
+    subreddit: truncate(postData.subreddit, 100),
+    title: truncate(postData.title, 500),
+    body: truncate(postData.body || '', 5000),
+    comments: truncate(postData.comments || '', 5000),
+    tones: CONFIG.TONES,
+    projectId: safeProject,
+    subredditRules: truncate(subredditRules || '', 3000)
+  };
+
+  if (replyTo) {
+    payload.replyTo = {
+      author: truncate(replyTo.author, 100),
+      text: truncate(replyTo.text, 3000)
+    };
+  }
+
+  // Call API with timeout and retry
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
-    const res = await fetch(CONFIG.API_URL + '/api/v1/reddit-generate', {
+    const res = await apiFetch('/api/v1/reddit-generate', {
       method: 'POST',
-      headers,
       body: JSON.stringify(payload),
       signal: controller.signal
     });
