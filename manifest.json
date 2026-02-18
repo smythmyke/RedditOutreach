@@ -1,6 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Marketeer",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPgPmcla48PDsnBqjg94MCnFkt7IDWw8tX/qKi9mIWXhyE4UWzgiEq/NXtTFDvExI0Tl+OPR7cLbmwfVcr5JmKL+OtA51jpmMceMTCZObUFQjYNQ6pdbxk+3Di6g/SD8BxSji6mD9VbTWTILom4AFzLoy62YNwYZOvhcIOtfZfpUu9UXjfmrf5M9NOOCcoGFHT8I/Ku2VUz803CfU22orMf/d+bWeLYK46TlAQt+sWjNrPfgqIVHiJV5wkrsFc+9kjYeKCYN2+gl0Q5LyYGQJkFGhmew24+s8n5haOTIfzJ+CH28zaz+V0E1dLOitylgtkGS93iU1pQ/+y4bHNR1bwIDAQAB",
   "version": "1.2.0",
   "description": "AI-powered Reddit response drafting tool. Generate contextual comment drafts in multiple tones.",
   "permissions": ["activeTab", "storage", "identity"],
@@ -9,7 +10,7 @@
     "https://www.googleapis.com/*"
   ],
   "oauth2": {
-    "client_id": "384411888340-gtj1ahs6voluf2gqnpsesjcvg5cm3qde.apps.googleusercontent.com",
+    "client_id": "815700675676-303cc9bumebnug1v1gre9cibqdarkqi3.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile"

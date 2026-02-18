@@ -73,10 +73,10 @@ class CreditsService {
     } catch (error) {
       // Hardcoded fallback packs
       return [
-        { id: 'starter', name: 'Starter Pack', credits: 50, price: 199, priceFormatted: '$1.99', badge: null },
-        { id: 'standard', name: 'Standard Pack', credits: 150, price: 499, priceFormatted: '$4.99', badge: 'popular' },
-        { id: 'pro', name: 'Pro Pack', credits: 400, price: 1199, priceFormatted: '$11.99', badge: null },
-        { id: 'power', name: 'Power Pack', credits: 1000, price: 2499, priceFormatted: '$24.99', badge: 'best_value' }
+        { id: 'starter', name: 'Starter Pack', credits: 50, price: 199, priceFormatted: '$1.99', badge: null, description: '50 AI-generated Reddit comment drafts. 5 unique tones per generation. Subreddit rules compliance. Perfect for trying out Marketeer.' },
+        { id: 'standard', name: 'Standard Pack', credits: 150, price: 499, priceFormatted: '$4.99', badge: 'popular', description: '150 AI-generated Reddit comment drafts. 5 unique tones per generation. Subreddit rules compliance. Context-aware replies to any comment. Save 33% vs Starter.' },
+        { id: 'pro', name: 'Pro Pack', credits: 400, price: 1199, priceFormatted: '$11.99', badge: null, description: '400 AI-generated Reddit comment drafts. 5 unique tones per generation. Subreddit rules compliance. Context-aware replies. Multi-product support. Save 40% vs Starter.' },
+        { id: 'power', name: 'Power Pack', credits: 1000, price: 2499, priceFormatted: '$24.99', badge: 'best_value', description: '1,000 AI-generated Reddit comment drafts. All Pro features. 5 tones, rules compliance, context-aware replies, multi-product support. Save 50% vs Starter.' }
       ];
     }
   }

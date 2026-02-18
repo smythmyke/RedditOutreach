@@ -337,7 +337,7 @@
 
     const btn = document.createElement('button');
     btn.className = 'ro-fab';
-    btn.textContent = 'R';
+    btn.textContent = 'M';
     btn.title = 'Marketeer — Reply to main post';
     btn.setAttribute('aria-label', 'Generate Reddit response');
     btn.addEventListener('click', onFABClick);

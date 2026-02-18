@@ -5,7 +5,7 @@ AI-powered Reddit response drafting Chrome extension. Reads Reddit posts, genera
 ## How It Works
 
 1. User browses Reddit and lands on a post page
-2. Clicks the orange **R** floating button (bottom-right)
+2. Clicks the orange **M** floating button (bottom-right)
 3. Extension reads the post title, body, subreddit, and top comments
 4. Sends to backend → Gemini generates a helpful draft in 5 tones
 5. Draft appears in a slide-in panel with tone tabs for editing
