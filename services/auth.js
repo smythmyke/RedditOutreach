@@ -49,7 +49,7 @@ class AuthService {
     });
 
     if (!userInfoResponse.ok) {
-      throw new Error('Failed to get user info from Google');
+      throw new Error(`Failed to get user info from Google (${userInfoResponse.status})`);
     }
 
     const userInfo = await userInfoResponse.json();
@@ -71,7 +71,8 @@ class AuthService {
     });
 
     if (!authResponse.ok) {
-      throw new Error('Failed to authenticate with backend');
+      const errText = await authResponse.text().catch(() => '');
+      throw new Error(`Failed to authenticate with backend (${authResponse.status})`);
     }
 
     const authData = await authResponse.json();
