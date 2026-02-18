@@ -1,0 +1,450 @@
+.ro-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f56040;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ro-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.ro-fab:active {
+  transform: scale(0.96);
+}
+
+.ro-fab.ro-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.ro-fab.ro-loading::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid transparent;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ro-spin 0.8s linear infinite;
+}
+
+/* Comment highlight on hover — always active on post pages */
+shreddit-comment.ro-hoverable {
+  cursor: pointer;
+}
+
+shreddit-comment.ro-highlight {
+  outline: 2px dashed #f56040;
+  outline-offset: -2px;
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Old Reddit comment highlight */
+.comment.ro-highlight > .entry {
+  outline: 2px dashed #f56040;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Disabled FAB — promotion blocked */
+.ro-fab.ro-blocked {
+  opacity: 0.6;
+}
+
+.ro-fab.ro-blocked::after {
+  content: '';
+  position: absolute;
+  width: 44px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+
+@keyframes ro-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Reply context in panel */
+.ro-reply-context {
+  background: #272729;
+  border-left: 3px solid #f56040;
+  border-radius: 0 6px 6px 0;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #818384;
+  line-height: 1.4;
+  flex-shrink: 0;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.ro-reply-context .ro-reply-author {
+  color: #d7dadc;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.ro-reply-context .ro-reply-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ro-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.ro-backdrop.ro-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ro-panel {
+  position: fixed;
+  top: 0;
+  right: -440px;
+  width: 420px;
+  height: 100vh;
+  background: #1a1a1b;
+  color: #d7dadc;
+  z-index: 1000001;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: right 0.25s ease-out;
+}
+
+.ro-panel.ro-visible {
+  right: 0;
+}
+
+.ro-panel-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #343536;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ro-panel-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ro-panel-subreddit {
+  font-size: 12px;
+  color: #818384;
+  margin-bottom: 2px;
+}
+
+.ro-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ro-close-btn {
+  background: none;
+  border: none;
+  color: #818384;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ro-close-btn:hover {
+  color: #d7dadc;
+}
+
+.ro-panel-body {
+  flex: 1;
+  padding: 16px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Project Dropdown */
+.ro-project-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #818384;
+  flex-shrink: 0;
+}
+
+.ro-project-select {
+  flex: 1;
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.ro-project-select:focus {
+  border-color: #f56040;
+}
+
+/* Rules Warning */
+.ro-rules-warning {
+  background: #2a1f0f;
+  border: 1px solid #5a4020;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #e0a030;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.ro-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 0;
+  color: #818384;
+}
+
+.ro-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #343536;
+  border-top-color: #f56040;
+  border-radius: 50%;
+  animation: ro-spin 0.8s linear infinite;
+}
+
+/* Tone Tabs */
+.ro-tone-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.ro-tone-tab {
+  padding: 6px 14px;
+  border-radius: 16px;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #818384;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ro-tone-tab:hover {
+  border-color: #818384;
+  color: #d7dadc;
+}
+
+.ro-tone-tab.ro-active {
+  background: #f56040;
+  border-color: #f56040;
+  color: #fff;
+}
+
+.ro-textarea {
+  width: 100%;
+  min-height: 240px;
+  flex: 1;
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.ro-textarea:focus {
+  border-color: #f56040;
+}
+
+.ro-char-count {
+  font-size: 12px;
+  color: #818384;
+  text-align: right;
+}
+
+.ro-panel-footer {
+  padding: 12px 20px 24px;
+  border-top: 1px solid #343536;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ro-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: opacity 0.15s;
+}
+
+.ro-btn:hover {
+  opacity: 0.85;
+}
+
+.ro-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ro-btn-primary {
+  background: #f56040;
+  color: #fff;
+  flex: 1;
+}
+
+.ro-btn-secondary {
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+}
+
+.ro-toast {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  background: #272729;
+  color: #d7dadc;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1000002;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.ro-toast.ro-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ro-toast.ro-error {
+  border-left: 3px solid #ff4444;
+}
+
+.ro-toast.ro-success {
+  border-left: 3px solid #46d160;
+}
+
+/* === History Indicators === */
+
+/* FAB — already commented on this post */
+.ro-fab.ro-commented {
+  background: #46d160;
+}
+
+.ro-fab.ro-commented::before {
+  content: '\2713';
+  font-size: 18px;
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  line-height: 1;
+}
+
+/* Feed page — green badge on post cards */
+.ro-feed-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #46d160;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Post card wrapper needs position:relative for badge positioning */
+shreddit-post.ro-has-badge,
+.thing.ro-has-badge {
+  position: relative;
+}
+
+/* Subtle left accent on commented post cards in feed */
+shreddit-post.ro-has-badge {
+  border-left: 3px solid #46d160;
+}
+
+/* Old Reddit feed badge */
+.thing.ro-has-badge > .entry {
+  border-left: 3px solid #46d160;
+  padding-left: 8px;
+}
+
+/* Post page — comment we replied to (green left border) */
+shreddit-comment.ro-replied {
+  border-left: 3px solid #46d160 !important;
+}
+
+.comment.ro-replied > .entry {
+  border-left: 3px solid #46d160;
+  padding-left: 8px;
+}
