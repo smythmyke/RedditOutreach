@@ -2,61 +2,33 @@
 
 ## Architecture
 
-The extension itself is loaded locally (unpacked Chrome extension). The **backend API** runs on Google Cloud Run as part of the GovToolsPro project.
+The extension is loaded as an unpacked Chrome extension. The backend API runs on Google Cloud Run as a shared API server.
 
 ## Backend Deployment
 
-The reddit-generate endpoint lives inside GovToolsPro's api-server.js, NOT in this repo. This is a shared API server.
-
-### Source Location
-```
-C:\Users\smyth\OneDrive\Desktop\Projects\GovToolsPro\api\api-server.js
-```
+The reddit-generate endpoint lives in the shared API server, not in this repo.
 
 ### Endpoint
 ```
 POST /api/v1/reddit-generate
 ```
 
-### Deploy Command
-```bash
-gcloud run deploy business-search-api \
-  --source "C:\Users\smyth\OneDrive\Desktop\Projects\GovToolsPro\api" \
-  --project sam-extension \
-  --region us-central1 \
-  --allow-unauthenticated
-```
-
-### Service Details
-- **Service name:** business-search-api
-- **GCP Project:** sam-extension
-- **Region:** us-central1
-- **Service URL:** https://business-search-api-815700675676.us-central1.run.app
-- **Auth:** Unauthenticated (public)
-- **Gemini key:** `GEMINI_API_KEY` from Secret Manager in `sam-extension` project
+### Deploy
+See the backend project's deployment instructions. The deploy re-deploys the entire shared API server.
 
 ### Verify After Deploy
-```bash
-curl -X POST https://business-search-api-815700675676.us-central1.run.app/api/v1/reddit-generate \
-  -H "Content-Type: application/json" \
-  -d '{"subreddit":"test","title":"Test post","tones":["friendly","short"]}'
-```
-
-Should return `{ "responses": { "friendly": "...", "short": "..." } }`.
+Test the endpoint returns `{ "responses": { "friendly": "...", "short": "..." } }` for a valid request.
 
 ## Extension Updates
 
-No deployment needed — just reload the unpacked extension at `chrome://extensions/`.
+No deployment needed — just reload the unpacked extension:
 
 1. Go to `chrome://extensions/`
 2. Find RedditOutreach
 3. Click the reload icon
 4. Refresh the Reddit tab
 
-## Important Notes
+## Notes
 
-- The API server is shared with GovToolsPro (Etsy tools). The reddit-generate endpoint is one of many endpoints in api-server.js.
-- Deploying re-deploys the ENTIRE api-server.js, not just the reddit endpoint.
-- There is no deploy-api.sh script — use the gcloud command directly.
-- Build uses the Dockerfile in the api/ directory.
+- The API server is shared across multiple projects. Deploying updates all endpoints.
 - Typical deploy takes 3-5 minutes (container build + revision rollout).
