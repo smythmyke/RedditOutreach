@@ -181,8 +181,8 @@
     const blocked = isPromotionBlocked();
     fab.classList.toggle('ro-blocked', blocked);
     fab.title = blocked
-      ? 'RedditOutreach — Promotion restricted in this subreddit (use "No Product" mode)'
-      : 'RedditOutreach — Generate Response';
+      ? 'Marketeer — Promotion restricted in this subreddit (use "No Product" mode)'
+      : 'Marketeer — Generate Response';
   }
 
   // --- Always-Active Comment Selection ---
@@ -338,7 +338,7 @@
     const btn = document.createElement('button');
     btn.className = 'ro-fab';
     btn.textContent = 'R';
-    btn.title = 'RedditOutreach — Reply to main post';
+    btn.title = 'Marketeer — Reply to main post';
     btn.setAttribute('aria-label', 'Generate Reddit response');
     btn.addEventListener('click', onFABClick);
     document.body.appendChild(btn);
@@ -391,7 +391,7 @@
     panel.className = 'ro-panel';
     panel.setAttribute('role', 'dialog');
     panel.setAttribute('aria-modal', 'true');
-    panel.setAttribute('aria-label', 'RedditOutreach Response Panel');
+    panel.setAttribute('aria-label', 'Marketeer Response Panel');
     panel.innerHTML = `
       <div class="ro-panel-header">
         <div class="ro-panel-header-text">

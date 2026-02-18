@@ -1,4 +1,4 @@
-# RedditOutreach Deployment Guide
+# Marketeer Deployment Guide
 
 ## Architecture
 
@@ -24,7 +24,7 @@ Test the endpoint returns `{ "responses": { "friendly": "...", "short": "..." } 
 No deployment needed — just reload the unpacked extension:
 
 1. Go to `chrome://extensions/`
-2. Find RedditOutreach
+2. Find Marketeer
 3. Click the reload icon
 4. Refresh the Reddit tab
 

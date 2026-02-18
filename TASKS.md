@@ -1,4 +1,4 @@
-# RedditOutreach — Production Readiness Tasks
+# Marketeer — Production Readiness Tasks
 
 **Last updated:** 2026-02-18
 **Goal:** Secure, monetize, and deploy to public via Chrome Web Store
@@ -13,11 +13,11 @@ These cannot be automated and must be done by the developer:
 |---|------|---------|--------|
 | M1 | Set `ADMIN_EMAILS` env var on Cloud Run: `gcloud run services update business-search-api --set-env-vars "ADMIN_EMAILS=smythmyke@gmail.com" --project sam-extension --region us-central1` | Backend admin email was moved from hardcoded to env var (Tier 1, Task 12) | Pending |
 | M2 | Set `GOOGLE_MAPS_STATIC_KEY` env var on Cloud Run (if Maps features are needed) | Hardcoded Maps API key was removed (Tier 1, Task 5). The SVG placeholder fallback handles the no-key case. | Pending |
-| M3 | Create a dedicated OAuth client ID for RedditOutreach in Google Cloud Console (`sam-extension` project → APIs & Services → Credentials → Create OAuth 2.0 Client ID for Chrome extension) | Currently using BLP's client_id. Works for dev but needs its own for Chrome Web Store. | Pending |
+| M3 | Create a dedicated OAuth client ID for Marketeer in Google Cloud Console (`sam-extension` project → APIs & Services → Credentials → Create OAuth 2.0 Client ID for Chrome extension) | Currently using BLP's client_id. Works for dev but needs its own for Chrome Web Store. | Pending |
 | M4 | Redeploy backend to Cloud Run after all backend security fixes are complete | Backend changes (demo key removal, Maps key removal, admin email env var) are saved locally but not yet deployed. | Pending |
 | M5 | Register for Chrome Web Store Developer account ($5 one-time fee) if not already done | Required for store publication. | Pending |
 | M6 | Host privacy policy and terms of service at a public URL (e.g., GitHub Pages) | Chrome Web Store requires a publicly accessible privacy policy URL. Currently bundled in extension at `docs/`. | Pending |
-| M7 | Choose a new extension name (no "Reddit" trademark) | Task 35. Must be done before store submission. | Pending |
+| M7 | Choose a new extension name (no "Reddit" trademark) | Task 35. Renamed to "Marketeer". | Done |
 | M8 | Install `helmet` in backend: `cd "C:\Users\smyth\OneDrive\Desktop\Projects\GovToolsPro\api" && npm install helmet` | Helmet was added to api-server.js but not yet installed in package.json. | Pending |
 | M9 | Set `SCHEDULER_SECRET` env var on Cloud Run: `gcloud run services update business-search-api --set-env-vars "SCHEDULER_SECRET=<random-secret>" --project sam-extension --region us-central1` | Internal endpoints now require this secret header (Task 39). Update any Cloud Scheduler jobs to include `X-Scheduler-Secret` header. | Pending |
 
@@ -90,7 +90,7 @@ These cannot be automated and must be done by the developer:
 | 32 | Add history pruning — max 500 entries or 90-day TTL, auto-cleanup on load | NEW | Low | Done |
 | 33 | Fix or remove options page (currently non-functional — saved tone never used, only 3/5 tones) | NEW | Low | Done |
 | 34 | Add client-side rate limit / cooldown on Regenerate (5s cooldown after response) | NEW | Low | Done |
-| 35 | Rename extension — remove "Reddit" from name (trademark risk) | NEW | Quick | Pending |
+| 35 | Rename extension — remove "Reddit" from name (trademark risk) | NEW | Quick | Done |
 | 36 | Add license file (MIT or proprietary) | NEW | Quick | Done |
 | 37 | Anonymize third-party data — replace `replyTo.author` with "User" before sending to backend | NEW | Quick | Done |
 
@@ -165,7 +165,7 @@ Tasks 60-62
 
 | Component | Copy From | Adapt For |
 |-----------|-----------|-----------|
-| `services/auth.js` | BLP `services/auth.js` | Change prefix `bulklistingpro_` → `redditoutreach_`, extension name header |
+| `services/auth.js` | BLP `services/auth.js` | Change prefix `bulklistingpro_` → `marketeer_`, extension name header |
 | `services/credits.js` | BLP `services/credits.js` | Change prefix, adapt checkout success/cancel URLs |
 | `services/storage.js` | BLP `services/storage.js` | Change STORAGE_KEYS to RO-specific keys |
 | `popup/popup.html` | BLP `popup/popup.html` | Adapt branding, show Reddit-specific status |

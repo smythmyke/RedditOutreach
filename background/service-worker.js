@@ -6,15 +6,15 @@ importScripts('../services/credits.js');
 // --- Auth token helper ---
 
 async function getAuthToken() {
-  const result = await chrome.storage.local.get(['redditoutreach_token', 'authToken']);
-  return result.redditoutreach_token || result.authToken || null;
+  const result = await chrome.storage.local.get(['marketeer_token', 'authToken']);
+  return result.marketeer_token || result.authToken || null;
 }
 
 function getExtensionHeaders() {
   return {
     'X-Extension-Id': chrome.runtime.id || 'unknown',
     'X-Extension-Version': chrome.runtime.getManifest().version,
-    'X-Extension-Name': 'RedditOutreach'
+    'X-Extension-Name': 'Marketeer'
   };
 }
 
@@ -68,7 +68,7 @@ async function apiFetch(endpoint, options = {}) {
           const authData = await authRes.json();
           const newToken = authData.token || token;
           await chrome.storage.local.set({
-            redditoutreach_token: newToken,
+            marketeer_token: newToken,
             authToken: newToken
           });
           mergedOptions.headers['Authorization'] = `Bearer ${newToken}`;
@@ -89,7 +89,7 @@ async function apiFetch(endpoint, options = {}) {
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     chrome.storage.local.set({
-      redditoutreach_installed: Date.now(),
+      marketeer_installed: Date.now(),
       ro_project: 'none'
     });
     // Open welcome tab on first install

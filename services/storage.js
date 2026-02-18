@@ -1,12 +1,12 @@
 /**
- * RedditOutreach Storage Service
+ * Marketeer Storage Service
  * Adapted from BulkListingPro services/storage.js
  */
 
 const STORAGE_KEYS = {
-  USER: 'redditoutreach_user',
-  TOKEN: 'redditoutreach_token',
-  CREDITS: 'redditoutreach_credits',
+  USER: 'marketeer_user',
+  TOKEN: 'marketeer_token',
+  CREDITS: 'marketeer_credits',
   PROJECT: 'ro_project',
   TONE: 'ro_tone',
   HISTORY: 'ro_history'

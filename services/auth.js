@@ -1,11 +1,11 @@
 /**
- * RedditOutreach Auth Service
+ * Marketeer Auth Service
  * Adapted from BulkListingPro services/auth.js
  * Google OAuth 3-step flow: chrome.identity → Google userinfo → backend session
  */
 
 const AUTH_API_BASE = 'https://business-search-api-815700675676.us-central1.run.app';
-const AUTH_STORAGE_PREFIX = 'redditoutreach_';
+const AUTH_STORAGE_PREFIX = 'marketeer_';
 
 class AuthService {
   constructor() {
@@ -60,7 +60,7 @@ class AuthService {
       headers: {
         'Content-Type': 'application/json',
         'X-Extension-Id': chrome.runtime.id,
-        'X-Extension-Name': 'RedditOutreach'
+        'X-Extension-Name': 'Marketeer'
       },
       body: JSON.stringify({
         googleToken: token,

@@ -5,9 +5,9 @@ $ErrorActionPreference = "Stop"
 
 $projectDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $distDir = Join-Path $projectDir "dist"
-$zipName = "RedditOutreach-store.zip"
+$zipName = "Marketeer-store.zip"
 
-Write-Host "Building RedditOutreach for Chrome Web Store..." -ForegroundColor Cyan
+Write-Host "Building Marketeer for Chrome Web Store..." -ForegroundColor Cyan
 
 # Create dist directory
 if (Test-Path $distDir) {

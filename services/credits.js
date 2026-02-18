@@ -1,10 +1,10 @@
 /**
- * RedditOutreach Credits Service
+ * Marketeer Credits Service
  * Adapted from BulkListingPro services/credits.js
  * Manages credit balance, Stripe checkout, and credit deduction
  */
 
-const CREDITS_STORAGE_KEY = 'redditoutreach_credits';
+const CREDITS_STORAGE_KEY = 'marketeer_credits';
 const CREDITS_API_BASE = 'https://business-search-api-815700675676.us-central1.run.app';
 
 class CreditsService {

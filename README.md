@@ -1,4 +1,4 @@
-# RedditOutreach
+# Marketeer
 
 AI-powered Reddit response drafting Chrome extension. Reads Reddit posts, generates helpful comment drafts via Gemini, and fills the comment box for user review.
 

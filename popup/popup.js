@@ -1,5 +1,5 @@
 /**
- * RedditOutreach Popup Script
+ * Marketeer Popup Script
  * Adapted from BulkListingPro popup/popup.js
  */
 
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     authStatus = await chrome.runtime.sendMessage({ type: 'CHECK_AUTH' });
   } catch (error) {
     // Fallback to direct storage read
-    const stored = await chrome.storage.local.get(['redditoutreach_user', 'redditoutreach_token', 'redditoutreach_credits']);
+    const stored = await chrome.storage.local.get(['marketeer_user', 'marketeer_token', 'marketeer_credits']);
     authStatus = {
-      authenticated: !!(stored.redditoutreach_user && stored.redditoutreach_token),
-      user: stored.redditoutreach_user,
-      credits: stored.redditoutreach_credits
+      authenticated: !!(stored.marketeer_user && stored.marketeer_token),
+      user: stored.marketeer_user,
+      credits: stored.marketeer_credits
     };
   }
 
