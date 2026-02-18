@@ -11,15 +11,16 @@ These cannot be automated and must be done by the developer:
 
 | # | Task | Context | Status |
 |---|------|---------|--------|
-| M1 | Set `ADMIN_EMAILS` env var on Cloud Run: `gcloud run services update business-search-api --set-env-vars "ADMIN_EMAILS=smythmyke@gmail.com" --project sam-extension --region us-central1` | Backend admin email was moved from hardcoded to env var (Tier 1, Task 12) | Pending |
+| M1 | Set `ADMIN_EMAILS` env var on Cloud Run | Backend admin email was moved from hardcoded to env var (Tier 1, Task 12) | Done |
 | M2 | Set `GOOGLE_MAPS_STATIC_KEY` env var on Cloud Run (if Maps features are needed) | Hardcoded Maps API key was removed (Tier 1, Task 5). The SVG placeholder fallback handles the no-key case. | Pending |
-| M3 | Create a dedicated OAuth client ID for Marketeer in Google Cloud Console (`sam-extension` project → APIs & Services → Credentials → Create OAuth 2.0 Client ID for Chrome extension) | Currently using BLP's client_id. Works for dev but needs its own for Chrome Web Store. | Pending |
-| M4 | Redeploy backend to Cloud Run after all backend security fixes are complete | Backend changes (demo key removal, Maps key removal, admin email env var) are saved locally but not yet deployed. | Pending |
+| M3 | Create a dedicated OAuth client ID for Marketeer in Google Cloud Console | Created: `815700675676-303cc9bumebnug1v1gre9cibqdarkqi3.apps.googleusercontent.com` | Done |
+| M4 | Redeploy backend to Cloud Run after all backend security fixes are complete | Deployed revision `business-search-api-00183` with all security fixes, Stripe price_data, Morgan, helmet. | Done |
 | M5 | Register for Chrome Web Store Developer account ($5 one-time fee) if not already done | Required for store publication. | Pending |
-| M6 | Host privacy policy and terms of service at a public URL (e.g., GitHub Pages) | Chrome Web Store requires a publicly accessible privacy policy URL. Currently bundled in extension at `docs/`. | Pending |
+| M6 | Host privacy policy and terms of service at a public URL (e.g., GitHub Pages) | GitHub Pages enabled at `https://smythmyke.github.io/RedditOutreach/` | Done |
 | M7 | Choose a new extension name (no "Reddit" trademark) | Task 35. Renamed to "Marketeer". | Done |
-| M8 | Install `helmet` in backend: `cd "C:\Users\smyth\OneDrive\Desktop\Projects\GovToolsPro\api" && npm install helmet` | Helmet was added to api-server.js but not yet installed in package.json. | Pending |
-| M9 | Set `SCHEDULER_SECRET` env var on Cloud Run: `gcloud run services update business-search-api --set-env-vars "SCHEDULER_SECRET=<random-secret>" --project sam-extension --region us-central1` | Internal endpoints now require this secret header (Task 39). Update any Cloud Scheduler jobs to include `X-Scheduler-Secret` header. | Pending |
+| M8 | Install `helmet` and `morgan` in backend | Installed via npm. | Done |
+| M9 | Set `SCHEDULER_SECRET` env var on Cloud Run | Set with random token. | Done |
+| M10 | Set `ALLOWED_EXTENSION_IDS` env var on Cloud Run | Set to `kmjagkblgiammdhaejiojajiibmlmcbl`. | Done |
 
 ---
 
@@ -102,14 +103,14 @@ These cannot be automated and must be done by the developer:
 |---|------|--------|--------|--------|
 | 38 | Fix Google OAuth — verify `googleToken` server-side before trusting email (`api-server.js:2319`) | NEW | Medium | Done |
 | 39 | Secure `/api/v1/internal/*` endpoints — add scheduler secret validation (`api-server.js:186`) | NEW | Low | Done |
-| 40 | Remove Firebase service account JSON from Docker image — use default SA on Cloud Run | NEW | Low | Pending |
+| 40 | Remove Firebase service account JSON from Docker image — use default SA on Cloud Run | NEW | Low | Done |
 | 41 | Fix CORS — remove permissive `else callback(null, true)` on `api-server.js:137` | NEW | Quick | Done |
-| 42 | Add SSRF protection to `/api/scrapeEmails` — block private IPs, metadata endpoints | NEW | Medium | Pending |
+| 42 | Add SSRF protection to `/api/scrapeEmails` — block private IPs, metadata endpoints | NEW | Medium | Done |
 | 43 | Add input length validation (`.isLength({ max: N })`) to all AI prompt fields | NEW | Low | Done |
 | 44 | Stop returning `error.message` to clients in 40+ backend routes | NEW | Medium | Done |
-| 45 | Validate `X-Extension-Id` against whitelist of known extension IDs | NEW | Low | Pending |
+| 45 | Validate `X-Extension-Id` against whitelist of known extension IDs | NEW | Low | Done |
 | 46 | Add Helmet middleware for security headers | NEW | Quick | Done |
-| 47 | Add request logging (Morgan or Cloud Logging) | NEW | Low | Pending |
+| 47 | Add request logging (Morgan or Cloud Logging) | NEW | Low | Done |
 | 48 | Reduce Express body-parser limit from 10MB to 1MB for non-upload routes | NEW | Quick | Done |
 | 49 | Remove rate limiter skip for `searchBusinesses`, `scrapeEmails`, `maps-key` endpoints | NEW | Quick | Done |
 
