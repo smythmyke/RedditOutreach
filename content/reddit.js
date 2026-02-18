@@ -397,6 +397,8 @@
     panel.querySelector('.ro-copy-btn').addEventListener('click', () => {
       navigator.clipboard.writeText(textarea.value).then(() => {
         showToast('Copied to clipboard');
+      }).catch(() => {
+        showToast('Could not copy to clipboard', 'error');
       });
     });
 
@@ -508,32 +510,8 @@
       }
     }
 
-    console.log('[RO] Auto-detect scores:', projectIds.map(function(pid) {
-      return pid + '=' + scoreProject(pid, subreddit, text);
-    }).join(', '), '→', best ? best + ' (' + bestScore + ')' : 'none');
-
     if (bestScore >= CONFIG.DETECT_THRESHOLD) return best;
     return null; // No confident match
-  }
-
-  // Helper to calculate a single project score (used for logging)
-  function scoreProject(pid, subreddit, text) {
-    var kw = CONFIG.PROJECT_KEYWORDS[pid];
-    var weights = CONFIG.DETECT_WEIGHTS;
-    var score = 0;
-    for (var i = 0; i < kw.subreddits.length; i++) {
-      if (subreddit === kw.subreddits[i]) { score += weights.subreddit; break; }
-    }
-    for (var i = 0; i < kw.phrases.length; i++) {
-      if (text.indexOf(kw.phrases[i]) !== -1) score += weights.phrase;
-    }
-    for (var i = 0; i < kw.high.length; i++) {
-      if (text.indexOf(kw.high[i]) !== -1) score += weights.high;
-    }
-    for (var i = 0; i < kw.medium.length; i++) {
-      if (text.indexOf(kw.medium[i]) !== -1) score += weights.medium;
-    }
-    return score;
   }
 
   function openPanel(postData) {
@@ -682,6 +660,8 @@
         }
         navigator.clipboard.writeText(text).then(() => {
           showToast('Could not open reply box — copied to clipboard', 'error');
+        }).catch(() => {
+          showToast('Could not open reply box or copy to clipboard', 'error');
         });
       }, 500);
       return;
@@ -702,6 +682,8 @@
     } else {
       navigator.clipboard.writeText(text).then(() => {
         showToast('Could not find comment box — copied to clipboard', 'error');
+      }).catch(() => {
+        showToast('Could not find comment box or copy to clipboard', 'error');
       });
     }
   }
@@ -736,30 +718,24 @@
   }
 
   function clickComposerTrigger() {
-    console.log('[RO] clickComposerTrigger called');
-
     // Strategy 1: Click the comments-action-button (deep search through shadow DOM)
     const commentsBtn = deepQuery('button[name="comments-action-button"]') ||
       deepQuery('button[data-post-click-location="comments-button"]');
-    console.log('[RO] Strategy 1 (comments-action-button):', commentsBtn ? 'FOUND' : 'not found');
     if (commentsBtn) simulateClick(commentsBtn);
 
     // Strategy 2: Click the "Join the conversation" placeholder input
     const trigger = deepQuery('faceplate-textarea-input[placeholder="Join the conversation"]') ||
       deepQuery('shreddit-async-loader[bundlename="comment_composer"] faceplate-textarea-input') ||
       deepQuery('comment-body-header faceplate-textarea-input');
-    console.log('[RO] Strategy 2 (Join the conversation):', trigger ? 'FOUND' : 'not found');
     if (trigger) simulateClick(trigger);
 
     // Strategy 3: Click the faceplate-tracker wrapper
     const tracker = deepQuery('faceplate-tracker[noun="add_comment_placeholder"]');
-    console.log('[RO] Strategy 3 (faceplate-tracker):', tracker ? 'FOUND' : 'not found');
     if (tracker) simulateClick(tracker);
 
     // Strategy 4: Reach into shadow DOM of the trigger itself
     if (trigger && trigger.shadowRoot) {
       const inner = trigger.shadowRoot.querySelector('textarea, input, [role="textbox"], div[contenteditable]');
-      console.log('[RO] Strategy 4 (shadow inner):', inner ? 'FOUND' : 'not found');
       if (inner) inner.click();
     }
   }
@@ -801,7 +777,7 @@
       }
 
       if (attempts <= 3) clickComposerTrigger();
-      if (attempts === 5) console.log('[RO] Editor not found after 5 attempts, trying textarea fallback');
+      // After 5 attempts, try textarea fallback
 
       if (attempts >= 5) {
         const mdTextarea = document.querySelector('shreddit-composer textarea') ||
@@ -828,6 +804,8 @@
         clearInterval(pollForComposer);
         navigator.clipboard.writeText(text).then(() => {
           showToast('Could not open comment box — copied to clipboard instead', 'error');
+        }).catch(() => {
+          showToast('Could not open comment box or copy to clipboard', 'error');
         });
       }
     }, 200);
@@ -896,6 +874,8 @@
         clearInterval(pollForReply);
         navigator.clipboard.writeText(text).then(() => {
           showToast('Could not open reply box — copied to clipboard instead', 'error');
+        }).catch(() => {
+          showToast('Could not open reply box or copy to clipboard', 'error');
         });
       }
     }, 200);

@@ -1,6 +1,9 @@
 importScripts('../config.js');
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // Only accept messages from this extension
+  if (sender.id !== chrome.runtime.id) return;
+
   if (message.type === 'GENERATE_ALL') {
     handleGenerateAll(message.postData, message.projectId, message.subredditRules, message.replyTo)
       .then(responses => sendResponse({ responses }))
@@ -39,7 +42,8 @@ async function handleGenerateAll(postData, projectId, subredditRules, replyTo) {
     const errBody = await res.text();
     if (res.status === 429) throw new Error('Rate limit exceeded — wait a moment');
     if (res.status === 503) throw new Error('AI service unavailable');
-    throw new Error(`API error (${res.status}): ${errBody.slice(0, 200)}`);
+    console.error(`API error (${res.status}):`, errBody.slice(0, 500));
+    throw new Error('Failed to generate response. Please try again.');
   }
 
   const data = await res.json();

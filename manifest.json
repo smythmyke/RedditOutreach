@@ -5,7 +5,7 @@
   "description": "AI-powered Reddit response drafting tool",
   "permissions": ["activeTab", "storage"],
   "host_permissions": [
-    "*://business-search-api-815700675676.us-central1.run.app/*"
+    "https://business-search-api-815700675676.us-central1.run.app/*"
   ],
   "background": {
     "service_worker": "background/service-worker.js"
@@ -13,8 +13,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.reddit.com/*",
-        "*://old.reddit.com/*"
+        "https://www.reddit.com/*",
+        "https://old.reddit.com/*"
       ],
       "js": ["config.js", "content/reddit.js"],
       "css": ["content/styles.css"],
