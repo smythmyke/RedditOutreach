@@ -91,7 +91,7 @@ shreddit-comment.ro-highlight {
   border-radius: 0 6px 6px 0;
   padding: 8px 12px;
   font-size: 12px;
-  color: #818384;
+  color: #9a9a9a;
   line-height: 1.4;
   flex-shrink: 0;
   max-height: 80px;
@@ -162,7 +162,7 @@ shreddit-comment.ro-highlight {
 
 .ro-panel-subreddit {
   font-size: 12px;
-  color: #818384;
+  color: #9a9a9a;
   margin-bottom: 2px;
 }
 
@@ -177,7 +177,7 @@ shreddit-comment.ro-highlight {
 .ro-close-btn {
   background: none;
   border: none;
-  color: #818384;
+  color: #9a9a9a;
   font-size: 24px;
   cursor: pointer;
   padding: 4px;
@@ -204,7 +204,7 @@ shreddit-comment.ro-highlight {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #818384;
+  color: #9a9a9a;
   flex-shrink: 0;
 }
 
@@ -236,7 +236,7 @@ shreddit-comment.ro-highlight {
   padding: 3px 10px 3px 8px;
   font-size: 12px;
   font-weight: 600;
-  color: #818384;
+  color: #9a9a9a;
   flex-shrink: 0;
 }
 
@@ -288,7 +288,7 @@ shreddit-comment.ro-highlight {
   justify-content: center;
   gap: 16px;
   padding: 40px 0;
-  color: #818384;
+  color: #9a9a9a;
 }
 
 .ro-spinner {
@@ -313,7 +313,7 @@ shreddit-comment.ro-highlight {
   border-radius: 16px;
   border: 1px solid #343536;
   background: #272729;
-  color: #818384;
+  color: #9a9a9a;
   font-size: 12px;
   font-weight: 600;
   font-family: inherit;
@@ -322,7 +322,7 @@ shreddit-comment.ro-highlight {
 }
 
 .ro-tone-tab:hover {
-  border-color: #818384;
+  border-color: #9a9a9a;
   color: #d7dadc;
 }
 
@@ -354,7 +354,7 @@ shreddit-comment.ro-highlight {
 
 .ro-char-count {
   font-size: 12px;
-  color: #818384;
+  color: #9a9a9a;
   text-align: right;
 }
 
@@ -491,4 +491,55 @@ shreddit-comment.ro-replied {
 .comment.ro-replied > .entry {
   border-left: 3px solid #46d160;
   padding-left: 8px;
+}
+
+/* === Responsive Panel === */
+@media (max-width: 480px) {
+  .ro-panel {
+    width: 100vw;
+    right: -100vw;
+  }
+  .ro-panel-footer {
+    padding-bottom: env(safe-area-inset-bottom, 24px);
+  }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  .ro-fab,
+  .ro-panel,
+  .ro-backdrop,
+  .ro-toast,
+  .ro-tone-tab {
+    transition: none !important;
+  }
+  .ro-fab:hover {
+    transform: none;
+  }
+  .ro-spinner {
+    animation: none;
+    border-top-color: #f56040;
+    opacity: 0.7;
+  }
+  .ro-fab.ro-loading::after {
+    animation: none;
+  }
+}
+
+/* === Focus Visible === */
+.ro-fab:focus-visible,
+.ro-close-btn:focus-visible,
+.ro-tone-tab:focus-visible,
+.ro-btn:focus-visible,
+.ro-project-select:focus-visible {
+  outline: 2px solid #f56040;
+  outline-offset: 2px;
+}
+
+/* Keyboard-accessible comment targets */
+shreddit-comment.ro-clickable:focus-visible,
+.comment.ro-clickable:focus-visible {
+  outline: 2px dashed #f56040;
+  outline-offset: -2px;
+  border-radius: 8px;
 }

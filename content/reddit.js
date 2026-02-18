@@ -194,10 +194,21 @@
     const selector = isOldReddit ? '.comment:not(.ro-clickable)' : 'shreddit-comment:not(.ro-clickable)';
     document.querySelectorAll(selector).forEach(el => {
       el.classList.add('ro-clickable', 'ro-hoverable');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', 'Click to reply to this comment');
       el.addEventListener('mouseenter', onCommentHover);
       el.addEventListener('mouseleave', onCommentUnhover);
       el.addEventListener('click', onCommentClick);
+      el.addEventListener('keydown', onCommentKeydown);
     });
+  }
+
+  function onCommentKeydown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onCommentClick(e);
+    }
   }
 
   function onCommentHover(e) {
@@ -328,6 +339,7 @@
     btn.className = 'ro-fab';
     btn.textContent = 'R';
     btn.title = 'RedditOutreach — Reply to main post';
+    btn.setAttribute('aria-label', 'Generate Reddit response');
     btn.addEventListener('click', onFABClick);
     document.body.appendChild(btn);
     return btn;
@@ -339,6 +351,8 @@
     if (!toast) {
       toast = document.createElement('div');
       toast.className = 'ro-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
       document.body.appendChild(toast);
     }
     toast.textContent = message;
@@ -370,11 +384,14 @@
     ).join('');
 
     const toneTabsHtml = CONFIG.TONES.map(tone =>
-      `<button class="ro-tone-tab" data-tone="${tone}">${CONFIG.TONE_LABELS[tone]}</button>`
+      `<button class="ro-tone-tab" data-tone="${tone}" role="tab" aria-selected="false">${CONFIG.TONE_LABELS[tone]}</button>`
     ).join('');
 
     panel = document.createElement('div');
     panel.className = 'ro-panel';
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', 'RedditOutreach Response Panel');
     panel.innerHTML = `
       <div class="ro-panel-header">
         <div class="ro-panel-header-text">
@@ -385,7 +402,7 @@
           <span class="ro-credits-icon">&#9679;</span>
           <span class="ro-credits-count">--</span>
         </div>
-        <button class="ro-close-btn">&times;</button>
+        <button class="ro-close-btn" aria-label="Close panel">&times;</button>
       </div>
       <div class="ro-panel-body">
         <div class="ro-reply-context" style="display:none"></div>
@@ -399,8 +416,8 @@
           <div class="ro-spinner"></div>
           <span>Generating responses...</span>
         </div>
-        <div class="ro-tone-tabs" style="display:none">${toneTabsHtml}</div>
-        <textarea class="ro-textarea" style="display:none" placeholder="AI-generated draft will appear here..."></textarea>
+        <div class="ro-tone-tabs" role="tablist" aria-label="Tone selection" style="display:none">${toneTabsHtml}</div>
+        <textarea class="ro-textarea" style="display:none" aria-label="Response draft" placeholder="AI-generated draft will appear here..."></textarea>
         <div class="ro-char-count" style="display:none"></div>
       </div>
       <div class="ro-panel-footer">
@@ -473,8 +490,28 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && panel && panel.classList.contains('ro-visible')) {
+      if (!panel || !panel.classList.contains('ro-visible')) return;
+      if (e.key === 'Escape') {
         closePanel();
+        return;
+      }
+      // Focus trap
+      if (e.key === 'Tab') {
+        const focusable = panel.querySelectorAll('button:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first || !panel.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last || !panel.contains(document.activeElement)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     });
   }
@@ -526,7 +563,9 @@
     charCount.textContent = textarea.value.length + ' chars';
 
     panel.querySelectorAll('.ro-tone-tab').forEach(tab => {
-      tab.classList.toggle('ro-active', tab.dataset.tone === tone);
+      const isActive = tab.dataset.tone === tone;
+      tab.classList.toggle('ro-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
   }
 
@@ -626,7 +665,12 @@
     updatePanelCredits();
 
     backdrop.classList.add('ro-visible');
-    requestAnimationFrame(() => panel.classList.add('ro-visible'));
+    requestAnimationFrame(() => {
+      panel.classList.add('ro-visible');
+      // Focus the close button for keyboard users
+      const closeBtn = panel.querySelector('.ro-close-btn');
+      if (closeBtn) closeBtn.focus();
+    });
 
     generateAllResponses(postData);
   }
@@ -885,6 +929,26 @@
     const selection = window.getSelection();
     selection.selectAllChildren(editable);
     selection.deleteFromDocument();
+
+    // Modern approach: InputEvent with dataTransfer (Lexical editors listen for this)
+    try {
+      const dt = new DataTransfer();
+      dt.setData('text/plain', text);
+      const inputEvent = new InputEvent('beforeinput', {
+        inputType: 'insertFromPaste',
+        data: text,
+        dataTransfer: dt,
+        bubbles: true,
+        cancelable: true,
+        composed: true
+      });
+      const handled = !editable.dispatchEvent(inputEvent);
+      if (handled || editable.textContent.trim().length > 0) return;
+    } catch (e) {
+      // InputEvent constructor not supported or event not handled
+    }
+
+    // Fallback: execCommand (deprecated but widely supported)
     document.execCommand('insertText', false, text);
   }
 

@@ -119,16 +119,16 @@ These cannot be automated and must be done by the developer:
 
 | # | Task | Source | Effort | Status |
 |---|------|--------|--------|--------|
-| 50 | Add ARIA labels to FAB, close button, tone tabs | NEW | Low | Pending |
-| 51 | Add `role="dialog"` + `aria-modal` + focus trap to panel | NEW | Medium | Pending |
-| 52 | Add `aria-live="polite"` to toast container | NEW | Quick | Pending |
-| 53 | Fix color contrast (`#818384` on `#1a1a1b` → WCAG AA 4.5:1) | NEW | Quick | Pending |
-| 54 | Add `prefers-reduced-motion` media query | NEW | Quick | Pending |
-| 55 | Make comment click targets keyboard-accessible (`tabindex`, `role="button"`) | NEW | Low | Pending |
-| 56 | Add responsive panel width for narrow viewports | NEW | Low | Pending |
-| 57 | Modularize `reddit.js` (1084 lines) into separate modules | NEW | High | Pending |
-| 58 | Replace `document.execCommand('insertText')` with modern alternative + fallback | NEW | Medium | Pending |
-| 59 | Deduplicate `scoreProject`/`detectProject` logic | NEW | Quick | Pending |
+| 50 | Add ARIA labels to FAB, close button, tone tabs | NEW | Low | Done |
+| 51 | Add `role="dialog"` + `aria-modal` + focus trap to panel | NEW | Medium | Done |
+| 52 | Add `aria-live="polite"` to toast container | NEW | Quick | Done |
+| 53 | Fix color contrast (`#818384` on `#1a1a1b` → WCAG AA 4.5:1) | NEW | Quick | Done |
+| 54 | Add `prefers-reduced-motion` media query | NEW | Quick | Done |
+| 55 | Make comment click targets keyboard-accessible (`tabindex`, `role="button"`) | NEW | Low | Done |
+| 56 | Add responsive panel width for narrow viewports | NEW | Low | Done |
+| 57 | Modularize `reddit.js` (1084 lines) into separate modules | NEW | High | Deferred |
+| 58 | Replace `document.execCommand('insertText')` with modern alternative + fallback | NEW | Medium | Done |
+| 59 | Deduplicate `scoreProject`/`detectProject` logic | NEW | Quick | Done |
 
 ---
 
