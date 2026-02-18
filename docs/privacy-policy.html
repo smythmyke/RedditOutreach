@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - RedditOutreach</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fafafa;
+        }
+        header {
+            border-bottom: 3px solid #ff4500;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #ff4500;
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        h2 {
+            color: #222;
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        p, li {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        ul {
+            padding-left: 24px;
+        }
+        .highlight {
+            background: #fff3e6;
+            border-left: 3px solid #ff4500;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        footer {
+            margin-top: 48px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #888;
+            font-size: 13px;
+        }
+        a { color: #ff4500; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RedditOutreach Privacy Policy</h1>
+        <p class="subtitle">Last updated: February 18, 2026</p>
+    </header>
+
+    <h2>Overview</h2>
+    <p>RedditOutreach is a Chrome extension that generates AI-powered comment drafts for Reddit. We are committed to protecting your privacy. This policy explains what data we collect, how we use it, and your rights.</p>
+
+    <h2>Data We Collect</h2>
+    <ul>
+        <li><strong>Google account email and name</strong> — used for authentication via Google OAuth. We receive your email and display name when you sign in.</li>
+        <li><strong>Credit balance and usage counts</strong> — tracked on our backend to manage your credit-based account.</li>
+        <li><strong>Payment information</strong> — processed entirely by Stripe. We do not store credit card numbers or payment details.</li>
+    </ul>
+
+    <h2>Data Transmitted to Our Server</h2>
+    <p>When you generate a comment draft, the following data is sent to our backend API and forwarded to Google's Gemini AI for processing:</p>
+    <ul>
+        <li>Reddit post title and body text</li>
+        <li>Subreddit name and community rules</li>
+        <li>Up to 5 top-level comments from the post (for context)</li>
+        <li>The comment you are replying to (if applicable)</li>
+    </ul>
+    <div class="highlight">
+        <p>This data is used solely for generating your comment draft. It is not stored on our servers beyond the duration of the request.</p>
+    </div>
+
+    <h2>Data We Do NOT Collect</h2>
+    <div class="highlight">
+        <ul>
+            <li>Your Reddit login credentials</li>
+            <li>Your browsing history</li>
+            <li>Data from non-Reddit websites</li>
+            <li>Personal data beyond what is listed above</li>
+        </ul>
+    </div>
+
+    <h2>How Your Data Is Used</h2>
+    <ul>
+        <li><strong>Authentication</strong> — your Google email identifies your account so we can track your credit balance.</li>
+        <li><strong>AI Generation</strong> — post content is sent to Google Gemini to generate contextually relevant comment drafts.</li>
+        <li><strong>Credit management</strong> — we record how many credits you purchase and use.</li>
+    </ul>
+
+    <h2>Third-Party Services</h2>
+    <ul>
+        <li><strong>Google OAuth</strong> — handles sign-in. Subject to <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+        <li><strong>Google Gemini AI</strong> — generates comment drafts. Post content is processed by Google's AI. Subject to <a href="https://ai.google.dev/terms">Google AI Terms</a>.</li>
+        <li><strong>Stripe</strong> — processes payments. Subject to <a href="https://stripe.com/privacy">Stripe's Privacy Policy</a>.</li>
+        <li><strong>Firebase</strong> — stores your account data (email, credit balance). Subject to <a href="https://firebase.google.com/support/privacy">Firebase's Privacy Policy</a>.</li>
+    </ul>
+
+    <h2>Local Storage</h2>
+    <p>The extension uses Chrome's local storage to save:</p>
+    <ul>
+        <li>Authentication tokens (for session persistence)</li>
+        <li>Selected product preference</li>
+        <li>Comment history (which posts you've commented on)</li>
+    </ul>
+    <p>This data stays on your device. You can clear it by removing the extension.</p>
+
+    <h2>Data Sharing</h2>
+    <p>We do not sell, rent, or share your personal data with third parties, except as required to provide the service (Google AI for generation, Stripe for payments, Firebase for storage) or as required by law.</p>
+
+    <h2>Data Retention</h2>
+    <p>Your account data is retained as long as you have an active account. You may request deletion of your account and associated data by contacting us.</p>
+
+    <h2>Your Rights</h2>
+    <ul>
+        <li>Request access to your stored data</li>
+        <li>Request deletion of your account and data</li>
+        <li>Uninstall the extension at any time, which removes all local storage</li>
+    </ul>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this policy from time to time. Changes will be posted on this page with an updated revision date.</p>
+
+    <h2>Contact</h2>
+    <p>For privacy questions or data requests, contact us at:</p>
+    <p><a href="mailto:smythmyke@gmail.com">smythmyke@gmail.com</a></p>
+
+    <footer>
+        &copy; 2026 RedditOutreach. All rights reserved.
+    </footer>
+</body>
+</html>

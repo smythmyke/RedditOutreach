@@ -1,6 +1,15 @@
 (function () {
   const isOldReddit = location.hostname === 'old.reddit.com';
 
+  // --- Utilities ---
+  function debounce(fn, ms) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...args), ms);
+    };
+  }
+
   // --- URL & Page Detection ---
   function isPostPage() {
     return /\/r\/[^/]+\/comments\//.test(location.pathname);
@@ -390,9 +399,9 @@
       updateRulesWarning();
     });
 
-    panel.querySelector('.ro-regen-btn').addEventListener('click', () => {
+    panel.querySelector('.ro-regen-btn').addEventListener('click', debounce(() => {
       generateAllResponses(currentPostData);
-    });
+    }, 3000));
 
     panel.querySelector('.ro-copy-btn').addEventListener('click', () => {
       navigator.clipboard.writeText(textarea.value).then(() => {

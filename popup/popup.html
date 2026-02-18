@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RedditOutreach</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 300px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      background: #1a1a1b;
+      color: #d7dadc;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #ff4500;
+    }
+    .header-icon {
+      width: 28px;
+      height: 28px;
+      background: #ff4500;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .header h1 {
+      font-size: 16px;
+      color: #ff4500;
+    }
+    .status-card {
+      padding: 12px;
+      background: #272729;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #343536;
+    }
+    .user-name {
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .user-email {
+      font-size: 11px;
+      color: #818384;
+    }
+    .credits-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid #343536;
+    }
+    .credits-label {
+      color: #818384;
+      font-size: 13px;
+    }
+    .credits-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff4500;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .btn-primary {
+      background: #ff4500;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #cc3700;
+    }
+    .btn-secondary {
+      background: #272729;
+      color: #d7dadc;
+      border: 1px solid #343536;
+    }
+    .btn-secondary:hover {
+      background: #343536;
+    }
+    .login-section {
+      text-align: center;
+    }
+    .login-text {
+      color: #818384;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid #343536;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+    .footer a {
+      color: #818384;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #ff4500;
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">R</div>
+    <h1>RedditOutreach</h1>
+  </div>
+
+  <div id="logged-in" class="hidden">
+    <div class="status-card">
+      <div class="user-row">
+        <img class="user-avatar" id="user-avatar" src="" alt="">
+        <div>
+          <div class="user-name" id="user-name"></div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <div class="credits-row">
+        <span class="credits-label">Credits</span>
+        <span class="credits-value" id="credit-count">--</span>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="buy-credits">Buy Credits</button>
+    <button class="btn btn-secondary" id="sign-out">Sign Out</button>
+  </div>
+
+  <div id="logged-out">
+    <div class="login-section">
+      <p class="login-text">Sign in to generate AI-powered Reddit comment drafts</p>
+      <button class="btn btn-primary" id="sign-in">Sign in with Google</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="#" id="privacy-link">Privacy</a>
+    <a href="#" id="terms-link">Terms</a>
+    <span style="color: #818384;" id="version"></span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

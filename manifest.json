@@ -1,14 +1,31 @@
 {
   "manifest_version": 3,
   "name": "RedditOutreach",
-  "version": "1.1.0",
-  "description": "AI-powered Reddit response drafting tool",
-  "permissions": ["activeTab", "storage"],
+  "version": "1.2.0",
+  "description": "AI-powered Reddit response drafting tool. Generate contextual comment drafts in multiple tones.",
+  "permissions": ["activeTab", "storage", "identity"],
   "host_permissions": [
-    "https://business-search-api-815700675676.us-central1.run.app/*"
+    "https://business-search-api-815700675676.us-central1.run.app/*",
+    "https://www.googleapis.com/*"
   ],
+  "oauth2": {
+    "client_id": "384411888340-gtj1ahs6voluf2gqnpsesjcvg5cm3qde.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
   "background": {
     "service_worker": "background/service-worker.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "popup/popup.html",
+    "default_title": "RedditOutreach"
   },
   "content_scripts": [
     {
@@ -29,5 +46,11 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["docs/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
