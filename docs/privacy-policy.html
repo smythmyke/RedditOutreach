@@ -1,129 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Marketeer</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background: #fafafa;
-        }
-        header {
-            border-bottom: 3px solid #ff4500;
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-        h1 {
-            color: #ff4500;
-            font-size: 28px;
-            margin-bottom: 4px;
-        }
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-        h2 {
-            color: #222;
-            font-size: 20px;
-            margin-top: 32px;
-            margin-bottom: 12px;
-        }
-        p, li {
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
-        ul {
-            padding-left: 24px;
-        }
-        .highlight {
-            background: #fff3e6;
-            border-left: 3px solid #ff4500;
-            padding: 12px 16px;
-            margin: 16px 0;
-            border-radius: 0 4px 4px 0;
-        }
-        footer {
-            margin-top: 48px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #888;
-            font-size: 13px;
-        }
-        a { color: #ff4500; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Marketeer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1b;
+      color: #d7dadc;
+      line-height: 1.7;
+    }
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+    header { text-align: center; padding-bottom: 24px; margin-bottom: 32px; border-bottom: 2px solid #ff4500; }
+    .logo { width: 48px; height: 48px; margin-bottom: 8px; }
+    header h1 { font-size: 24px; color: #ff4500; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #9a9a9a; }
+    nav { text-align: center; margin-bottom: 32px; }
+    nav a { color: #9a9a9a; text-decoration: none; font-size: 13px; margin: 0 10px; transition: color 0.15s; }
+    nav a:hover { color: #ff4500; }
+    h2 { color: #ff4500; font-size: 18px; margin-top: 28px; margin-bottom: 12px; }
+    p, li { margin-bottom: 10px; font-size: 14px; }
+    ul { padding-left: 20px; }
+    a { color: #ff4500; }
+    .highlight {
+      background: #272729;
+      border-left: 3px solid #ff4500;
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #343536;
+      color: #6a6a6a;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <div class="page-wrap">
     <header>
-        <h1>Marketeer Privacy Policy</h1>
-        <p class="subtitle">Last updated: February 18, 2026</p>
+      <a href="index.html"><img class="logo" src="icon128.png" alt="Marketeer"></a>
+      <h1>Privacy Policy</h1>
+      <p class="subtitle">Last updated: February 18, 2026</p>
     </header>
 
-    <div style="margin-bottom:24px;font-size:13px">
-        <a href="terms-of-service.html" style="margin-right:16px">Terms of Service</a>
-        <a href="disclaimer.html" style="margin-right:16px">Disclaimer</a>
-        <a href="support.html">Support</a>
-    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="terms-of-service.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </nav>
 
     <h2>Overview</h2>
     <p>Marketeer is a Chrome extension that generates AI-powered comment drafts for Reddit. We are committed to protecting your privacy. This policy explains what data we collect, how we use it, and your rights.</p>
 
     <h2>Data We Collect</h2>
     <ul>
-        <li><strong>Google account email and name</strong> — used for authentication via Google OAuth. We receive your email and display name when you sign in.</li>
-        <li><strong>Credit balance and usage counts</strong> — tracked on our backend to manage your credit-based account.</li>
-        <li><strong>Payment information</strong> — processed entirely by Stripe. We do not store credit card numbers or payment details.</li>
+      <li><strong>Google account email and name</strong> — used for authentication via Google OAuth. We receive your email and display name when you sign in.</li>
+      <li><strong>Credit balance and usage counts</strong> — tracked on our backend to manage your credit-based account.</li>
+      <li><strong>Payment information</strong> — processed entirely by Stripe. We do not store credit card numbers or payment details.</li>
     </ul>
 
     <h2>Data Transmitted to Our Server</h2>
     <p>When you generate a comment draft, the following data is sent to our backend API and forwarded to Google's Gemini AI for processing:</p>
     <ul>
-        <li>Reddit post title and body text</li>
-        <li>Subreddit name and community rules</li>
-        <li>Up to 5 top-level comments from the post (for context)</li>
-        <li>The comment you are replying to (if applicable)</li>
+      <li>Reddit post title and body text</li>
+      <li>Subreddit name and community rules</li>
+      <li>Up to 5 top-level comments from the post (for context)</li>
+      <li>The comment you are replying to (if applicable)</li>
     </ul>
     <div class="highlight">
-        <p>This data is used solely for generating your comment draft. It is not stored on our servers beyond the duration of the request.</p>
+      <p>This data is used solely for generating your comment draft. It is not stored on our servers beyond the duration of the request.</p>
     </div>
 
     <h2>Data We Do NOT Collect</h2>
     <div class="highlight">
-        <ul>
-            <li>Your Reddit login credentials</li>
-            <li>Your browsing history</li>
-            <li>Data from non-Reddit websites</li>
-            <li>Personal data beyond what is listed above</li>
-        </ul>
+      <ul>
+        <li>Your Reddit login credentials</li>
+        <li>Your browsing history</li>
+        <li>Data from non-Reddit websites</li>
+        <li>Personal data beyond what is listed above</li>
+      </ul>
     </div>
 
     <h2>How Your Data Is Used</h2>
     <ul>
-        <li><strong>Authentication</strong> — your Google email identifies your account so we can track your credit balance.</li>
-        <li><strong>AI Generation</strong> — post content is sent to Google Gemini to generate contextually relevant comment drafts.</li>
-        <li><strong>Credit management</strong> — we record how many credits you purchase and use.</li>
+      <li><strong>Authentication</strong> — your Google email identifies your account so we can track your credit balance.</li>
+      <li><strong>AI Generation</strong> — post content is sent to Google Gemini to generate contextually relevant comment drafts.</li>
+      <li><strong>Credit management</strong> — we record how many credits you purchase and use.</li>
     </ul>
 
     <h2>Third-Party Services</h2>
     <ul>
-        <li><strong>Google OAuth</strong> — handles sign-in. Subject to <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
-        <li><strong>Google Gemini AI</strong> — generates comment drafts. Post content is processed by Google's AI. Subject to <a href="https://ai.google.dev/terms">Google AI Terms</a>.</li>
-        <li><strong>Stripe</strong> — processes payments. Subject to <a href="https://stripe.com/privacy">Stripe's Privacy Policy</a>.</li>
-        <li><strong>Firebase</strong> — stores your account data (email, credit balance). Subject to <a href="https://firebase.google.com/support/privacy">Firebase's Privacy Policy</a>.</li>
+      <li><strong>Google OAuth</strong> — handles sign-in. Subject to <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+      <li><strong>Google Gemini AI</strong> — generates comment drafts. Post content is processed by Google's AI. Subject to <a href="https://ai.google.dev/terms">Google AI Terms</a>.</li>
+      <li><strong>Stripe</strong> — processes payments. Subject to <a href="https://stripe.com/privacy">Stripe's Privacy Policy</a>.</li>
+      <li><strong>Firebase</strong> — stores your account data (email, credit balance). Subject to <a href="https://firebase.google.com/support/privacy">Firebase's Privacy Policy</a>.</li>
     </ul>
 
     <h2>Local Storage</h2>
     <p>The extension uses Chrome's local storage to save:</p>
     <ul>
-        <li>Authentication tokens (for session persistence)</li>
-        <li>Selected product preference</li>
-        <li>Comment history (which posts you've commented on)</li>
+      <li>Authentication tokens (for session persistence)</li>
+      <li>Selected product preference</li>
+      <li>Comment history (which posts you've commented on)</li>
     </ul>
     <p>This data stays on your device. You can clear it by removing the extension.</p>
 
@@ -135,9 +120,9 @@
 
     <h2>Your Rights</h2>
     <ul>
-        <li>Request access to your stored data</li>
-        <li>Request deletion of your account and data</li>
-        <li>Uninstall the extension at any time, which removes all local storage</li>
+      <li>Request access to your stored data</li>
+      <li>Request deletion of your account and data</li>
+      <li>Uninstall the extension at any time, which removes all local storage</li>
     </ul>
 
     <h2>Changes to This Policy</h2>
@@ -147,8 +132,7 @@
     <p>For privacy questions or data requests, contact us at:</p>
     <p><a href="mailto:smythmyke@gmail.com">smythmyke@gmail.com</a></p>
 
-    <footer>
-        &copy; 2026 Marketeer. All rights reserved.
-    </footer>
+    <footer>&copy; 2026 Marketeer. All rights reserved.</footer>
+  </div>
 </body>
 </html>

@@ -1,75 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - Marketeer</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background: #fafafa;
-        }
-        header {
-            border-bottom: 3px solid #ff4500;
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-        h1 {
-            color: #ff4500;
-            font-size: 28px;
-            margin-bottom: 4px;
-        }
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-        h2 {
-            color: #222;
-            font-size: 20px;
-            margin-top: 32px;
-            margin-bottom: 12px;
-        }
-        p, li {
-            margin-bottom: 12px;
-            font-size: 15px;
-        }
-        ul {
-            padding-left: 24px;
-        }
-        .highlight {
-            background: #fff3e6;
-            border-left: 3px solid #ff4500;
-            padding: 12px 16px;
-            margin: 16px 0;
-            border-radius: 0 4px 4px 0;
-        }
-        footer {
-            margin-top: 48px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #888;
-            font-size: 13px;
-        }
-        a { color: #ff4500; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - Marketeer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1b;
+      color: #d7dadc;
+      line-height: 1.7;
+    }
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+    header { text-align: center; padding-bottom: 24px; margin-bottom: 32px; border-bottom: 2px solid #ff4500; }
+    .logo { width: 48px; height: 48px; margin-bottom: 8px; }
+    header h1 { font-size: 24px; color: #ff4500; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #9a9a9a; }
+    nav { text-align: center; margin-bottom: 32px; }
+    nav a { color: #9a9a9a; text-decoration: none; font-size: 13px; margin: 0 10px; transition: color 0.15s; }
+    nav a:hover { color: #ff4500; }
+    h2 { color: #ff4500; font-size: 18px; margin-top: 28px; margin-bottom: 12px; }
+    p, li { margin-bottom: 10px; font-size: 14px; }
+    ul { padding-left: 20px; }
+    a { color: #ff4500; }
+    .highlight {
+      background: #272729;
+      border-left: 3px solid #ff4500;
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #343536;
+      color: #6a6a6a;
+      font-size: 12px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <div class="page-wrap">
     <header>
-        <h1>Marketeer Terms of Service</h1>
-        <p class="subtitle">Last updated: February 18, 2026</p>
+      <a href="index.html"><img class="logo" src="icon128.png" alt="Marketeer"></a>
+      <h1>Terms of Service</h1>
+      <p class="subtitle">Last updated: February 18, 2026</p>
     </header>
 
-    <div style="margin-bottom:24px;font-size:13px">
-        <a href="privacy-policy.html" style="margin-right:16px">Privacy Policy</a>
-        <a href="disclaimer.html" style="margin-right:16px">Disclaimer</a>
-        <a href="support.html">Support</a>
-    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </nav>
 
     <h2>1. Service Description</h2>
     <p>Marketeer is a Chrome extension that uses AI to generate comment drafts for Reddit posts. It reads publicly visible post content, generates contextual responses using Google's Gemini AI, and assists with filling Reddit's comment interface.</p>
@@ -79,28 +64,28 @@
 
     <h2>3. Account and Authentication</h2>
     <ul>
-        <li>You must sign in with a Google account to use Marketeer.</li>
-        <li>You are responsible for maintaining the security of your Google account.</li>
-        <li>You must be at least 18 years old to use this service.</li>
+      <li>You must sign in with a Google account to use Marketeer.</li>
+      <li>You are responsible for maintaining the security of your Google account.</li>
+      <li>You must be at least 18 years old to use this service.</li>
     </ul>
 
     <h2>4. Credits and Payments</h2>
     <div class="highlight">
-        <ul>
-            <li>Marketeer uses a credit-based pricing model. Each comment generation uses credits.</li>
-            <li>Credits are purchased through Stripe and are <strong>non-refundable</strong>.</li>
-            <li>Purchased credits do not expire.</li>
-            <li>New accounts receive free starter credits.</li>
-            <li>Pricing is subject to change. Existing purchased credits will not be affected.</li>
-        </ul>
+      <ul>
+        <li>Marketeer uses a credit-based pricing model. Each comment generation uses credits.</li>
+        <li>Credits are purchased through Stripe and are <strong>non-refundable</strong>.</li>
+        <li>Purchased credits do not expire.</li>
+        <li>New accounts receive free starter credits.</li>
+        <li>Pricing is subject to change. Existing purchased credits will not be affected.</li>
+      </ul>
     </div>
 
     <h2>5. User Responsibilities</h2>
     <ul>
-        <li>You are solely responsible for the content of comments you post on Reddit, including AI-generated drafts you choose to submit.</li>
-        <li>You must comply with <a href="https://www.redditinc.com/policies/content-policy">Reddit's Content Policy</a> and individual subreddit rules.</li>
-        <li>You must not use Marketeer for spam, harassment, or any activity that violates Reddit's terms.</li>
-        <li>You should review all AI-generated content before posting to ensure accuracy and appropriateness.</li>
+      <li>You are solely responsible for the content of comments you post on Reddit, including AI-generated drafts you choose to submit.</li>
+      <li>You must comply with <a href="https://www.redditinc.com/policies/content-policy">Reddit's Content Policy</a> and individual subreddit rules.</li>
+      <li>You must not use Marketeer for spam, harassment, or any activity that violates Reddit's terms.</li>
+      <li>You should review all AI-generated content before posting to ensure accuracy and appropriateness.</li>
     </ul>
 
     <h2>6. Reddit Relationship</h2>
@@ -108,36 +93,36 @@
 
     <h2>7. AI-Generated Content Disclaimer</h2>
     <ul>
-        <li>Comment drafts are generated by Google's Gemini AI and may contain inaccuracies, hallucinations, or inappropriate content.</li>
-        <li>You are responsible for reviewing and editing all generated content before posting.</li>
-        <li>We make no guarantees about the accuracy, quality, or suitability of generated content.</li>
+      <li>Comment drafts are generated by Google's Gemini AI and may contain inaccuracies, hallucinations, or inappropriate content.</li>
+      <li>You are responsible for reviewing and editing all generated content before posting.</li>
+      <li>We make no guarantees about the accuracy, quality, or suitability of generated content.</li>
     </ul>
 
     <h2>8. Automation Disclaimer</h2>
     <ul>
-        <li>Marketeer interacts with Reddit's website interface to assist with comment composition.</li>
-        <li>Reddit may change their website at any time, which could temporarily break the extension's functionality.</li>
-        <li>You assume responsibility for any consequences of using this tool on Reddit's platform.</li>
+      <li>Marketeer interacts with Reddit's website interface to assist with comment composition.</li>
+      <li>Reddit may change their website at any time, which could temporarily break the extension's functionality.</li>
+      <li>You assume responsibility for any consequences of using this tool on Reddit's platform.</li>
     </ul>
 
     <h2>9. Limitation of Liability</h2>
     <p>Marketeer is provided "as is" without warranties of any kind. To the maximum extent permitted by law:</p>
     <ul>
-        <li>We are not liable for any damages arising from your use of the service, including Reddit account actions, lost data, or inaccurate AI output.</li>
-        <li>Our total liability is limited to the amount you have paid for credits in the 12 months preceding any claim.</li>
+      <li>We are not liable for any damages arising from your use of the service, including Reddit account actions, lost data, or inaccurate AI output.</li>
+      <li>Our total liability is limited to the amount you have paid for credits in the 12 months preceding any claim.</li>
     </ul>
 
     <h2>10. Service Availability</h2>
     <ul>
-        <li>We strive to keep Marketeer functional but do not guarantee uninterrupted service.</li>
-        <li>We may update, modify, or discontinue features at any time.</li>
+      <li>We strive to keep Marketeer functional but do not guarantee uninterrupted service.</li>
+      <li>We may update, modify, or discontinue features at any time.</li>
     </ul>
 
     <h2>11. Termination</h2>
     <ul>
-        <li>You may stop using Marketeer at any time by uninstalling the extension.</li>
-        <li>We may suspend or terminate your account for abuse, fraud, or violation of these terms.</li>
-        <li>Upon termination, unused credits are forfeited.</li>
+      <li>You may stop using Marketeer at any time by uninstalling the extension.</li>
+      <li>We may suspend or terminate your account for abuse, fraud, or violation of these terms.</li>
+      <li>Upon termination, unused credits are forfeited.</li>
     </ul>
 
     <h2>12. Changes to Terms</h2>
@@ -150,8 +135,7 @@
     <p>For questions about these terms, contact us at:</p>
     <p><a href="mailto:smythmyke@gmail.com">smythmyke@gmail.com</a></p>
 
-    <footer>
-        &copy; 2026 Marketeer. All rights reserved.
-    </footer>
+    <footer>&copy; 2026 Marketeer. All rights reserved.</footer>
+  </div>
 </body>
 </html>
