@@ -23,17 +23,9 @@
       padding: 48px 24px;
       text-align: center;
     }
-    .hero-icon {
-      width: 64px;
-      height: 64px;
-      background: #ff4500;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: bold;
-      color: white;
+    .hero-logo {
+      width: 72px;
+      height: 72px;
       margin-bottom: 16px;
     }
     .hero h1 {
@@ -103,14 +95,14 @@
       line-height: 1.5;
     }
 
-    .getting-started {
+    .getting-started, .best-practices {
       background: #1a1a1b;
       border: 1px solid #343536;
       border-radius: 8px;
       padding: 24px;
       margin-bottom: 32px;
     }
-    .getting-started h2 {
+    .getting-started h2, .best-practices h2 {
       font-size: 18px;
       margin-bottom: 16px;
       color: #d7dadc;
@@ -146,6 +138,32 @@
       padding-top: 3px;
     }
     .step-text strong { color: #ff4500; }
+
+    .tips {
+      list-style: none;
+    }
+    .tips li {
+      position: relative;
+      padding: 10px 0 10px 28px;
+      font-size: 14px;
+      line-height: 1.5;
+      border-bottom: 1px solid #272729;
+    }
+    .tips li:last-child { border-bottom: none; }
+    .tips li::before {
+      content: "\26A0";
+      position: absolute;
+      left: 0;
+      color: #e0a030;
+      font-size: 14px;
+    }
+    .tips li strong { color: #ff4500; }
+    .tips-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #6a6a6a;
+      line-height: 1.5;
+    }
 
     .cta {
       text-align: center;
@@ -187,7 +205,7 @@
 </head>
 <body>
   <div class="hero">
-    <div class="hero-icon">M</div>
+    <img class="hero-logo" src="icon128.png" alt="Marketeer">
     <h1>Welcome to Marketeer</h1>
     <p>AI-powered Reddit comment drafting. Generate contextual, rule-compliant responses in multiple tones.</p>
   </div>
@@ -240,6 +258,19 @@
           <div class="step-text"><strong>Pick a tone</strong>, edit if needed, then copy or submit directly.</div>
         </li>
       </ol>
+    </div>
+
+    <div class="best-practices">
+      <h2>Best Practices — Stay Under the Radar</h2>
+      <ul class="tips">
+        <li><strong>Mix in manual comments and upvotes</strong> between Marketeer-assisted ones. Accounts that only post AI-drafted comments look bot-like to moderators.</li>
+        <li><strong>Don't hit the same subreddit back-to-back.</strong> Space out your comments across different communities. Rapid-fire posting in one sub is a major bot signal.</li>
+        <li><strong>Build organic karma first</strong> before using Marketeer in strict subs like r/Entrepreneur or r/startups. New accounts with polished comments get flagged.</li>
+        <li><strong>Avoid commenting on old posts.</strong> Commenting on posts more than a few hours old is unusual behavior that automated systems flag.</li>
+        <li><strong>Always edit before submitting.</strong> Add your personal touch — change a word, add a specific detail, adjust the tone. This makes every comment uniquely yours.</li>
+        <li><strong>Watch your daily pace.</strong> The activity counter in the panel header tracks your daily comments. Keep it green.</li>
+      </ul>
+      <p class="tips-note">Marketeer is a drafting assistant, not an autopilot. The most effective comments are the ones you genuinely engage with before posting.</p>
     </div>
 
     <div class="cta">
