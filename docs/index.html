@@ -4,113 +4,462 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketeer — AI-Powered Reddit Comment Drafting</title>
+  <meta name="description" content="Generate contextual Reddit comment drafts in 5 tones. Marketeer is a Chrome extension that reads subreddit rules, respects community guidelines, and helps you engage authentically.">
+  <link rel="canonical" href="https://smythmyke.github.io/RedditOutreach/">
+  <meta name="theme-color" content="#ff4500">
+  <link rel="icon" type="image/png" sizes="128x128" href="icon128.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="icon128.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Marketeer — AI-Powered Reddit Comment Drafting">
+  <meta property="og:description" content="Generate contextual Reddit comment drafts in 5 tones. Rules-aware, multi-product, works on new and old Reddit.">
+  <meta property="og:url" content="https://smythmyke.github.io/RedditOutreach/">
+  <meta property="og:image" content="https://smythmyke.github.io/RedditOutreach/icon128.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Marketeer — AI-Powered Reddit Comment Drafting">
+  <meta name="twitter:description" content="Generate contextual Reddit comment drafts in 5 tones. Rules-aware, multi-product, works on new and old Reddit.">
+  <meta name="twitter:image" content="https://smythmyke.github.io/RedditOutreach/icon128.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Marketeer",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "description": "AI-powered Reddit comment drafting Chrome extension. Generate contextual responses in 5 tones while respecting subreddit rules.",
+    "url": "https://smythmyke.github.io/RedditOutreach/",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "description": "Free to install with starter credits. Credit packs from $1.99."
+    }
+  }
+  </script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #1a1a1b;
+      background: #030303;
       color: #d7dadc;
       line-height: 1.7;
     }
-    .page-wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 40px 24px;
+    a { color: #ff4500; text-decoration: none; }
+
+    /* Nav */
+    .topnav {
+      background: #1a1a1b;
+      border-bottom: 1px solid #343536;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    header {
-      text-align: center;
-      padding-bottom: 24px;
-      margin-bottom: 32px;
-      border-bottom: 2px solid #ff4500;
+    .topnav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      color: #d7dadc;
     }
-    .logo { width: 72px; height: 72px; margin-bottom: 12px; }
-    header h1 { font-size: 32px; color: #ff4500; margin-bottom: 4px; }
-    .tagline { font-size: 16px; color: #9a9a9a; }
-    nav { text-align: center; margin-bottom: 32px; }
-    nav a {
+    .topnav-brand img { width: 28px; height: 28px; }
+    .topnav-links a {
       color: #9a9a9a;
-      text-decoration: none;
       font-size: 13px;
-      margin: 0 10px;
+      margin-left: 20px;
       transition: color 0.15s;
     }
-    nav a:hover { color: #ff4500; }
-    .features {
-      list-style: none;
-      margin-bottom: 32px;
-    }
-    .features li {
-      padding: 10px 0;
-      font-size: 15px;
-      border-bottom: 1px solid #272729;
-    }
-    .features li::before {
-      content: "\2022";
-      color: #ff4500;
-      font-weight: bold;
-      margin-right: 10px;
-    }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .links a {
-      display: inline-block;
-      padding: 12px 24px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: opacity 0.15s;
-    }
-    .links a:hover { opacity: 0.85; }
-    .btn-primary { background: #ff4500; color: #fff; }
-    .btn-secondary { background: #272729; color: #d7dadc; border: 1px solid #343536; }
-    footer {
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid #343536;
-      color: #6a6a6a;
-      font-size: 12px;
+    .topnav-links a:hover { color: #ff4500; }
+
+    /* Hero */
+    .hero {
       text-align: center;
+      padding: 80px 24px 64px;
+      background: linear-gradient(180deg, #1a1a1b 0%, #030303 100%);
+      border-bottom: 3px solid #ff4500;
+    }
+    .hero-logo { width: 80px; height: 80px; margin-bottom: 20px; }
+    .hero h1 {
+      font-size: 40px;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .hero h1 span { color: #ff4500; }
+    .hero .subtitle {
+      font-size: 18px;
+      color: #9a9a9a;
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: #ff4500;
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: 28px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .hero-cta:hover { background: #cc3700; color: #fff; }
+    .hero-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #6a6a6a;
+    }
+
+    /* Section */
+    .section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 15px;
+      color: #9a9a9a;
+      margin-bottom: 40px;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: #1a1a1b;
+      border: 1px solid #343536;
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: #ff4500; }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: #272729;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+    .feature-card h3 {
+      font-size: 15px;
+      color: #d7dadc;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: #9a9a9a;
+      line-height: 1.5;
+    }
+
+    /* How It Works */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .step-num {
+      min-width: 36px;
+      height: 36px;
+      background: #ff4500;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .step-content h3 {
+      font-size: 15px;
+      color: #d7dadc;
+      margin-bottom: 4px;
+    }
+    .step-content p {
+      font-size: 13px;
+      color: #9a9a9a;
+      line-height: 1.5;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .price-card {
+      background: #1a1a1b;
+      border: 1px solid #343536;
+      border-radius: 10px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .price-card:hover { border-color: #ff4500; }
+    .price-card.popular {
+      border-color: #ff4500;
+      position: relative;
+    }
+    .price-card.popular::before {
+      content: 'Popular';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4500;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 12px;
+      border-radius: 10px;
+    }
+    .price-card h3 {
+      font-size: 16px;
+      color: #d7dadc;
+      margin-bottom: 8px;
+    }
+    .price-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ff4500;
+    }
+    .price-credits {
+      font-size: 13px;
+      color: #9a9a9a;
+      margin-top: 4px;
+    }
+    .price-per {
+      font-size: 11px;
+      color: #6a6a6a;
+      margin-top: 8px;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      text-align: center;
+      padding: 64px 24px;
+      background: linear-gradient(180deg, #030303 0%, #1a1a1b 100%);
+    }
+    .cta-banner h2 {
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .cta-banner p {
+      font-size: 15px;
+      color: #9a9a9a;
+      margin-bottom: 24px;
+    }
+
+    /* Footer */
+    footer {
+      background: #1a1a1b;
+      border-top: 1px solid #343536;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-links {
+      margin-bottom: 16px;
+    }
+    .footer-links a {
+      color: #9a9a9a;
+      font-size: 13px;
+      margin: 0 12px;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: #ff4500; }
+    .footer-copy {
+      font-size: 12px;
+      color: #6a6a6a;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .hero { padding: 48px 20px 40px; }
+      .section { padding: 40px 20px; }
+      .topnav-links { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="page-wrap">
-    <header>
-      <img class="logo" src="icon128.png" alt="Marketeer">
-      <h1>Marketeer</h1>
-      <p class="tagline">AI-Powered Reddit Comment Drafting</p>
-    </header>
 
-    <nav>
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <div class="topnav-brand">
+      <img src="icon128.png" alt="Marketeer">
+      <span>Marketeer</span>
+    </div>
+    <div class="topnav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="support.html">Support</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero-logo" src="icon128.png" alt="Marketeer">
+    <h1>AI-Powered <span>Reddit</span> Comment Drafting</h1>
+    <p class="subtitle">Generate contextual, rule-compliant comment drafts in 5 tones. Mention your products naturally — or go product-free for genuine engagement.</p>
+    <a class="hero-cta" href="https://chromewebstore.google.com/detail/marketeer/kmjagkblgiammdhaejiojajiibmlmcbl">Install Free from Chrome Web Store</a>
+    <p class="hero-note">Free starter credits included. No subscription required.</p>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <h2 class="section-title">Features</h2>
+    <p class="section-sub">Everything you need to engage on Reddit — without the guesswork.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#9997;</div>
+        <h3>5 Tones, One Click</h3>
+        <p>Friendly, casual, professional, comical, or short. Generate all five simultaneously and pick the best fit.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128220;</div>
+        <h3>Rules-Aware AI</h3>
+        <p>Automatically reads subreddit rules from the sidebar. The AI adjusts or skips product mentions to stay compliant.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128172;</div>
+        <h3>Reply to Any Comment</h3>
+        <p>Click any comment to draft a contextual reply, or use the floating button for a top-level post comment.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127919;</div>
+        <h3>Multi-Product Support</h3>
+        <p>Define your products with features, benefits, and target subreddits. AI auto-selects the right one.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#129302;</div>
+        <h3>AI Product Setup</h3>
+        <p>Enter a name and description — AI generates benefits, scenarios, subreddits, and keywords for you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#127760;</div>
+        <h3>New &amp; Old Reddit</h3>
+        <p>Works seamlessly on both reddit.com and old.reddit.com. Same experience, any layout.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works" style="background:#1a1a1b;border-radius:0;">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">Four steps from install to draft.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Install &amp; Sign In</h3>
+          <p>Add from the Chrome Web Store. Sign in with Google via the toolbar icon.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Browse Reddit</h3>
+          <p>Navigate to any post. A floating M button appears in the bottom-right corner.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Generate Drafts</h3>
+          <p>Click the button for a post comment, or click any existing comment to reply. Five tone variations are generated instantly.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Edit &amp; Post</h3>
+          <p>Pick a tone, personalize the draft, then copy or submit directly into the Reddit comment box.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" id="pricing">
+    <h2 class="section-title">Simple Credit Pricing</h2>
+    <p class="section-sub">1 credit = 1 generation (5 tone variations). No subscriptions. Buy what you need.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <div class="price-amount">$1.99</div>
+        <div class="price-credits">50 credits</div>
+        <div class="price-per">$0.04 / generation</div>
+      </div>
+      <div class="price-card popular">
+        <h3>Standard</h3>
+        <div class="price-amount">$4.99</div>
+        <div class="price-credits">150 credits</div>
+        <div class="price-per">$0.03 / generation</div>
+      </div>
+      <div class="price-card">
+        <h3>Pro</h3>
+        <div class="price-amount">$11.99</div>
+        <div class="price-credits">400 credits</div>
+        <div class="price-per">$0.03 / generation</div>
+      </div>
+      <div class="price-card">
+        <h3>Power</h3>
+        <div class="price-amount">$24.99</div>
+        <div class="price-credits">1,000 credits</div>
+        <div class="price-per">$0.025 / generation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <h2>Start Engaging on Reddit Today</h2>
+    <p>Install Marketeer and get free starter credits to try it out.</p>
+    <a class="hero-cta" href="https://chromewebstore.google.com/detail/marketeer/kmjagkblgiammdhaejiojajiibmlmcbl">Get Marketeer — It's Free</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
       <a href="support.html">Support</a>
       <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="terms-of-service.html">Terms</a>
+      <a href="terms-of-service.html">Terms of Service</a>
       <a href="disclaimer.html">Disclaimer</a>
-    </nav>
-
-    <ul class="features">
-      <li>Generate contextual comment drafts in 5 tones</li>
-      <li>Product-aware responses with natural mentions</li>
-      <li>Respects subreddit rules automatically</li>
-      <li>Reply to comments or top-level posts</li>
-      <li>AI-assisted product setup</li>
-      <li>Works on new Reddit and old Reddit</li>
-    </ul>
-
-    <div class="links">
-      <a class="btn-primary" href="https://chromewebstore.google.com/detail/marketeer/kmjagkblgiammdhaejiojajiibmlmcbl">Install from Chrome Web Store</a>
-      <a class="btn-secondary" href="support.html">Support</a>
-      <a class="btn-secondary" href="privacy-policy.html">Privacy Policy</a>
-      <a class="btn-secondary" href="terms-of-service.html">Terms of Service</a>
     </div>
+    <div class="footer-copy">&copy; 2026 Marketeer. All rights reserved.</div>
+  </footer>
 
-    <footer>&copy; 2026 Marketeer. All rights reserved.</footer>
-  </div>
 </body>
 </html>

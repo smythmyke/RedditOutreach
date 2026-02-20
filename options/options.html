@@ -9,21 +9,31 @@
       background: #1a1a1b;
       color: #d7dadc;
       padding: 40px;
-      max-width: 640px;
+      max-width: 720px;
       margin: 0 auto;
     }
     h1 {
       font-size: 22px;
       margin-bottom: 8px;
-      color: #f56040;
+      color: #ff4500;
     }
     .subtitle {
       color: #9a9a9a;
       font-size: 14px;
       margin-bottom: 32px;
     }
+    h2 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #d7dadc;
+      border-bottom: 1px solid #343536;
+      padding-bottom: 8px;
+    }
+    .section {
+      margin-bottom: 32px;
+    }
     .field {
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     label {
       display: block;
@@ -36,7 +46,7 @@
       color: #9a9a9a;
       margin-bottom: 8px;
     }
-    select {
+    select, input[type="text"], textarea {
       width: 100%;
       background: #272729;
       color: #d7dadc;
@@ -47,7 +57,15 @@
       font-family: inherit;
       outline: none;
     }
-    select:focus { border-color: #f56040; }
+    select:focus, input:focus, textarea:focus { border-color: #ff4500; }
+    textarea { resize: vertical; min-height: 60px; }
+    .char-counter {
+      text-align: right;
+      font-size: 11px;
+      color: #6a6a6a;
+      margin-top: 2px;
+    }
+    .char-counter.over { color: #ff4444; }
     button {
       padding: 10px 24px;
       border-radius: 20px;
@@ -56,13 +74,26 @@
       font-size: 14px;
       font-weight: 600;
       font-family: inherit;
-      background: #f56040;
+      background: #ff4500;
       color: #fff;
-      margin-top: 16px;
     }
     button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      background: #343536;
+      color: #d7dadc;
+    }
+    .btn-small {
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: 14px;
+    }
+    .btn-danger {
+      background: #cc3333;
+      color: #fff;
+    }
     .status {
-      margin-top: 16px;
+      margin-top: 12px;
       padding: 10px 14px;
       border-radius: 6px;
       font-size: 13px;
@@ -71,39 +102,272 @@
       color: #46d160;
       border: 1px solid #2d5a2d;
     }
+    .status.error {
+      background: #3a1a1a;
+      color: #ff6b6b;
+      border-color: #5a2d2d;
+    }
     .status.show { display: block; }
+
+    /* Product cards */
+    .product-list {
+      margin-bottom: 16px;
+    }
+    .product-card {
+      background: #272729;
+      border: 1px solid #343536;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .product-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .product-card-name {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .product-card-meta {
+      font-size: 12px;
+      color: #9a9a9a;
+      margin-top: 2px;
+    }
+    .product-card-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: #6a6a6a;
+      font-size: 14px;
+    }
+    .product-count {
+      font-size: 12px;
+      color: #6a6a6a;
+      margin-bottom: 8px;
+    }
+
+    /* Product form */
+    .product-form {
+      background: #272729;
+      border: 1px solid #343536;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .product-form.show { display: block; }
+    .product-form h3 {
+      font-size: 15px;
+      margin-bottom: 16px;
+      color: #ff4500;
+    }
+    .form-row {
+      margin-bottom: 14px;
+    }
+    .form-row label {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .form-row .hint {
+      font-size: 11px;
+      color: #6a6a6a;
+      margin-bottom: 4px;
+    }
+    .required::after {
+      content: ' *';
+      color: #ff4500;
+    }
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    /* AI generation */
+    .ai-generate-row {
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+    .btn-ai {
+      width: 100%;
+      padding: 10px;
+      border: 1px dashed #ff4500;
+      border-radius: 6px;
+      background: transparent;
+      color: #ff4500;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-ai:hover { background: rgba(255, 69, 0, 0.1); }
+    .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
+    .ai-hint {
+      font-size: 11px;
+      color: #6a6a6a;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .ai-fields-section { display: none; }
+    .ai-fields-section.show { display: block; }
+    .ai-fields-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #343536;
+    }
+    .ai-fields-header span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9a9a9a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-regen {
+      padding: 4px 10px;
+      font-size: 11px;
+      border-radius: 12px;
+      border: 1px solid #343536;
+      background: transparent;
+      color: #9a9a9a;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    .btn-regen:hover { color: #ff4500; border-color: #ff4500; }
+    .btn-regen:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <h1>Marketeer</h1>
-  <p class="subtitle">AI-powered Reddit response drafting</p>
-
-  <div class="field">
-    <label for="tone">Default Tone</label>
-    <p class="field-desc">The tone tab selected first when generating responses.</p>
-    <select id="tone">
-      <option value="friendly">Friendly</option>
-      <option value="casual">Casual</option>
-      <option value="professional">Professional</option>
-      <option value="comical">Comical</option>
-      <option value="short">Short</option>
-    </select>
+  <div style="display:flex;align-items:center;justify-content:space-between;">
+    <div>
+      <h1>Marketeer</h1>
+      <p class="subtitle">AI-powered Reddit response drafting</p>
+    </div>
+    <div class="hidden" id="creditsDisplay" style="font-size:14px;font-weight:600;color:#ff4500;"></div>
   </div>
 
-  <div class="field">
-    <label for="project">Default Project</label>
-    <p class="field-desc">Pre-selected product when opening the panel. Can be changed per-post.</p>
-    <select id="project">
-      <option value="bulklistingpro">BulkListingPro</option>
-      <option value="govtoolspro">GovToolsPro</option>
-      <option value="patentsearch">Patent Search Generator</option>
-      <option value="none">No Product</option>
-    </select>
+  <!-- General Settings -->
+  <div class="section">
+    <h2>General Settings</h2>
+    <div class="field">
+      <label for="tone">Default Tone</label>
+      <p class="field-desc">The tone tab selected first when generating responses.</p>
+      <select id="tone">
+        <option value="friendly">Friendly</option>
+        <option value="casual">Casual</option>
+        <option value="professional">Professional</option>
+        <option value="comical">Comical</option>
+        <option value="short">Short</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="defaultProduct">Default Product</label>
+      <p class="field-desc">Pre-selected product when opening the panel. Can be changed per-post.</p>
+      <select id="defaultProduct">
+        <option value="none">No Product</option>
+      </select>
+    </div>
+    <button id="saveSettings">Save Settings</button>
+    <div class="status" id="settingsStatus">Settings saved</div>
   </div>
 
-  <button id="save">Save</button>
-  <div class="status" id="status">Settings saved</div>
+  <!-- Products -->
+  <div class="section">
+    <h2>Products</h2>
+    <p class="field-desc">Define your products here. The AI will reference them in generated comments when relevant.</p>
+    <button id="addProductBtn" class="btn-secondary">+ Add Product (1 credit)</button>
+    <div class="product-count" id="productCount"></div>
+    <button id="expandLimitBtn" class="btn-secondary hidden" style="font-size:12px;padding:6px 14px;margin-bottom:8px;">Expand Limit +20 (5 credits)</button>
+    <div class="status" id="productsStatus"></div>
+    <div class="product-list" id="productList"></div>
 
+    <!-- Product Form (hidden by default) -->
+    <div class="product-form" id="productForm">
+      <h3 id="formTitle">Add Product</h3>
+      <input type="hidden" id="editProductId" value="">
+
+      <div class="form-row">
+        <label for="pName" class="required">Product Name</label>
+        <input type="text" id="pName" maxlength="100" placeholder="e.g. MyAwesomeTool">
+        <div class="char-counter"><span id="pNameCount">0</span>/100</div>
+      </div>
+
+      <div class="form-row">
+        <label for="pLink">Link</label>
+        <p class="hint">Chrome Web Store URL, website, etc.</p>
+        <input type="text" id="pLink" maxlength="500" placeholder="https://...">
+        <div class="char-counter"><span id="pLinkCount">0</span>/500</div>
+      </div>
+
+      <div class="form-row">
+        <label for="pFeatures" class="required">Features / Description</label>
+        <p class="hint">What does the product do? Key features, capabilities. The AI uses this to write relevant comments.</p>
+        <textarea id="pFeatures" maxlength="2000" rows="4" placeholder="e.g. Chrome extension that bulk uploads listings to Etsy. Key features: spreadsheet import, AI title optimization..."></textarea>
+        <div class="char-counter"><span id="pFeaturesCount">0</span>/2000</div>
+      </div>
+
+      <div class="ai-generate-row" id="aiGenerateRow">
+        <button class="btn-ai" id="generateMetaBtn">Generate with AI</button>
+        <p class="ai-hint">Auto-fill benefits, scenarios, subreddits &amp; keywords</p>
+      </div>
+
+      <div class="ai-fields-section" id="aiFieldsSection">
+        <div class="ai-fields-header">
+          <span>AI-Generated Fields</span>
+          <button class="btn-regen" id="regenerateMetaBtn">Regenerate</button>
+        </div>
+
+        <div class="form-row">
+          <label for="pBenefits">Benefits</label>
+          <p class="hint">What problems does it solve? Why should someone use it?</p>
+          <textarea id="pBenefits" maxlength="1000" rows="3" placeholder="e.g. Saves hours of manual listing work. AI writes SEO-optimized titles and descriptions..."></textarea>
+          <div class="char-counter"><span id="pBenefitsCount">0</span>/1000</div>
+        </div>
+
+        <div class="form-row">
+          <label for="pScenarios">Scenarios</label>
+          <p class="hint">When should the AI mention this product? What types of posts/discussions?</p>
+          <textarea id="pScenarios" maxlength="1000" rows="3" placeholder="e.g. Sellers struggling with listing volume. Questions about Etsy SEO. Discussions about selling tools..."></textarea>
+          <div class="char-counter"><span id="pScenariosCount">0</span>/1000</div>
+        </div>
+
+        <div class="form-row">
+          <label for="pSubreddits">Subreddits</label>
+          <p class="hint">Comma-separated. Auto-selects this product when visiting these subreddits.</p>
+          <input type="text" id="pSubreddits" placeholder="e.g. etsy, etsysellers, ecommerce">
+        </div>
+
+        <div class="form-row">
+          <label for="pKeywords">Keywords</label>
+          <p class="hint">Comma-separated. Auto-selects this product when post content matches these keywords.</p>
+          <input type="text" id="pKeywords" placeholder="e.g. bulk listing, cross-listing, SEO optimization">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button id="saveProductBtn" disabled>Save Product</button>
+        <button id="cancelProductBtn" class="btn-secondary">Cancel</button>
+      </div>
+      <div class="status" id="productFormStatus"></div>
+    </div>
+  </div>
+
+  <script src="../services/storage.js"></script>
   <script src="options.js"></script>
 </body>
 </html>
