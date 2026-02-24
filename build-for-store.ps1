@@ -41,6 +41,12 @@ foreach ($item in $includeItems) {
     }
 }
 
+# Remove "key" field from manifest (not allowed in Chrome Web Store uploads)
+$manifestPath = Join-Path $distDir "manifest.json"
+$manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+$manifest.PSObject.Properties.Remove('key')
+$manifest | ConvertTo-Json -Depth 10 | Set-Content $manifestPath -Encoding UTF8
+
 # Create zip
 $zipPath = Join-Path $projectDir $zipName
 if (Test-Path $zipPath) {

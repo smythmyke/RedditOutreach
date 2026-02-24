@@ -58,6 +58,7 @@ class CreditsService {
 
       return data;
     } catch (error) {
+      console.error('[Credits] getBalance failed:', error.message);
       // Fall back to cached value in storage
       const stored = await chrome.storage.local.get([CREDITS_STORAGE_KEY]);
       return stored[CREDITS_STORAGE_KEY] || { available: 0, used: 0, purchased: 0, monthlyAllocation: 0 };

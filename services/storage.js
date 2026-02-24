@@ -9,7 +9,13 @@ const STORAGE_KEYS = {
   CREDITS: 'marketeer_credits',
   PROJECT: 'ro_project',
   TONE: 'ro_tone',
-  HISTORY: 'ro_history'
+  HISTORY: 'ro_history',
+  PRODUCTS: 'marketeer_products',
+  PRODUCT_LIMIT: 'marketeer_product_limit',
+  SEARCH_RESULTS: 'marketeer_search_results',
+  SEARCH_DISMISSED: 'marketeer_search_dismissed',
+  SEARCH_SAVED: 'marketeer_search_saved',
+  SEARCH_SETTINGS: 'marketeer_search_settings'
 };
 
 class StorageService {

@@ -7,7 +7,7 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      width: 300px;
+      width: 380px;
       padding: 16px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       font-size: 14px;
@@ -18,26 +18,69 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       padding-bottom: 12px;
       border-bottom: 2px solid #ff4500;
     }
     .header-icon {
-      width: 28px;
-      height: 28px;
-      background: #ff4500;
-      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+    .header-left {
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
+      gap: 10px;
+    }
+    .header-credits {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ff4500;
+    }
+    .header-credits .credits-icon {
+      font-size: 11px;
+      color: #9a9a9a;
     }
     .header h1 {
       font-size: 16px;
       color: #ff4500;
     }
+
+    /* Tab bar */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #343536;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 8px 0;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: #9a9a9a;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: #d7dadc; }
+    .tab-btn.active {
+      color: #ff4500;
+      border-bottom-color: #ff4500;
+    }
+
+    /* Tab content */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Account tab (existing styles) */
     .status-card {
       padding: 12px;
       background: #272729;
@@ -89,6 +132,7 @@
       font-size: 14px;
       font-weight: 500;
       margin-bottom: 8px;
+      font-family: inherit;
     }
     .btn-primary {
       background: #ff4500;
@@ -113,6 +157,228 @@
       margin-bottom: 12px;
       font-size: 13px;
     }
+    .credits-warning {
+      background: #2a1f0f;
+      border: 1px solid #5a4020;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #e0a030;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    /* Products tab */
+    .product-count {
+      font-size: 12px;
+      color: #6a6a6a;
+      margin-bottom: 8px;
+    }
+    .product-list {
+      margin-bottom: 12px;
+    }
+    .product-card {
+      background: #272729;
+      border: 1px solid #343536;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .product-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .product-card-name {
+      font-weight: 600;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .product-card-meta {
+      font-size: 11px;
+      color: #9a9a9a;
+      margin-top: 2px;
+    }
+    .product-card-actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .btn-small {
+      padding: 4px 10px;
+      font-size: 11px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+    }
+    .btn-small:hover { opacity: 0.85; }
+    .btn-edit {
+      background: #343536;
+      color: #d7dadc;
+    }
+    .btn-danger {
+      background: #cc3333;
+      color: #fff;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 20px;
+      color: #6a6a6a;
+      font-size: 13px;
+    }
+
+    /* Product form */
+    .product-form {
+      background: #272729;
+      border: 1px solid #343536;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 10px;
+      display: none;
+    }
+    .product-form.show { display: block; }
+    .product-form h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #ff4500;
+    }
+    .form-row {
+      margin-bottom: 10px;
+    }
+    .form-row label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .form-row .hint {
+      font-size: 10px;
+      color: #6a6a6a;
+      margin-bottom: 3px;
+    }
+    .required::after {
+      content: ' *';
+      color: #ff4500;
+    }
+    .form-row input[type="text"],
+    .form-row textarea {
+      width: 100%;
+      background: #1a1a1b;
+      color: #d7dadc;
+      border: 1px solid #343536;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus {
+      border-color: #ff4500;
+    }
+    .form-row textarea {
+      resize: vertical;
+      min-height: 48px;
+    }
+    .char-counter {
+      text-align: right;
+      font-size: 10px;
+      color: #6a6a6a;
+      margin-top: 2px;
+    }
+    .char-counter.over { color: #ff4444; }
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .form-actions .btn {
+      width: auto;
+      flex: 1;
+      padding: 8px;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+    .form-status {
+      margin-top: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: none;
+      background: #1a3a1a;
+      color: #46d160;
+      border: 1px solid #2d5a2d;
+    }
+    .form-status.error {
+      background: #3a1a1a;
+      color: #ff6b6b;
+      border-color: #5a2d2d;
+    }
+    .form-status.show { display: block; }
+
+    /* AI generation */
+    .ai-generate-row {
+      margin-top: 4px;
+      margin-bottom: 10px;
+    }
+    .btn-ai {
+      width: 100%;
+      padding: 8px;
+      border: 1px dashed #ff4500;
+      border-radius: 6px;
+      background: transparent;
+      color: #ff4500;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-ai:hover { background: rgba(255, 69, 0, 0.1); }
+    .btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
+    .ai-hint {
+      font-size: 10px;
+      color: #6a6a6a;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .ai-fields-section { display: none; }
+    .ai-fields-section.show { display: block; }
+    .ai-fields-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #343536;
+    }
+    .ai-fields-header span {
+      font-size: 11px;
+      font-weight: 600;
+      color: #9a9a9a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-regen {
+      padding: 3px 8px;
+      font-size: 10px;
+      border-radius: 10px;
+      border: 1px solid #343536;
+      background: transparent;
+      color: #9a9a9a;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    .btn-regen:hover { color: #ff4500; border-color: #ff4500; }
+    .btn-regen:disabled { opacity: 0.5; cursor: not-allowed; }
+
     .footer {
       margin-top: 12px;
       padding-top: 8px;
@@ -128,48 +394,147 @@
     .footer a:hover {
       color: #ff4500;
     }
-    .credits-warning {
-      background: #2a1f0f;
-      border: 1px solid #5a4020;
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 12px;
-      color: #e0a030;
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="header-icon">M</div>
-    <h1>Marketeer</h1>
+    <div class="header-left">
+      <img class="header-icon" src="../icons/icon48.png" alt="M">
+      <h1>Marketeer</h1>
+    </div>
+    <div class="header-credits hidden" id="header-credits">
+      <span class="credits-icon">credits:</span>
+      <span id="header-credit-count">--</span>
+    </div>
   </div>
 
-  <div id="logged-in" class="hidden">
-    <div class="status-card">
-      <div class="user-row">
-        <img class="user-avatar" id="user-avatar" src="" alt="">
-        <div>
-          <div class="user-name" id="user-name"></div>
-          <div class="user-email" id="user-email"></div>
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="account">Account</button>
+    <button class="tab-btn" data-tab="products">Products</button>
+  </div>
+
+  <!-- Account Tab -->
+  <div class="tab-content active" id="tab-account">
+    <div id="logged-in" class="hidden">
+      <div class="status-card">
+        <div class="user-row">
+          <img class="user-avatar" id="user-avatar" src="" alt="">
+          <div>
+            <div class="user-name" id="user-name"></div>
+            <div class="user-email" id="user-email"></div>
+          </div>
+        </div>
+        <div class="credits-row">
+          <span class="credits-label">Credits</span>
+          <span class="credits-value" id="credit-count">--</span>
         </div>
       </div>
-      <div class="credits-row">
-        <span class="credits-label">Credits</span>
-        <span class="credits-value" id="credit-count">--</span>
+      <div class="credits-warning hidden" id="credits-warning"></div>
+      <button class="btn btn-primary" id="open-panel-btn">Open Panel on This Page</button>
+      <button class="btn btn-secondary" id="search-btn" style="border-color:#f56040;color:#f56040;">Search for Opportunities</button>
+      <button class="btn btn-primary" id="buy-credits">Buy Credits</button>
+      <button class="btn btn-secondary" id="sign-out">Sign Out</button>
+    </div>
+
+    <div id="logged-out">
+      <div class="login-section">
+        <p class="login-text">Sign in to generate AI-powered Reddit comment drafts</p>
+        <button class="btn btn-primary" id="sign-in">Sign in with Google</button>
       </div>
     </div>
-    <div class="credits-warning hidden" id="credits-warning"></div>
-    <button class="btn btn-primary" id="buy-credits">Buy Credits</button>
-    <button class="btn btn-secondary" id="sign-out">Sign Out</button>
   </div>
 
-  <div id="logged-out">
-    <div class="login-section">
-      <p class="login-text">Sign in to generate AI-powered Reddit comment drafts</p>
-      <button class="btn btn-primary" id="sign-in">Sign in with Google</button>
+  <!-- Products Tab -->
+  <div class="tab-content" id="tab-products">
+    <div id="products-login-required" class="login-section">
+      <p class="login-text">Sign in to manage your products</p>
+      <button class="btn btn-primary" id="products-sign-in">Sign in with Google</button>
+    </div>
+    <div id="products-content" class="hidden">
+    <button class="btn btn-secondary" id="add-product-btn">+ Add Product (1 credit)</button>
+    <div class="product-count" id="product-count"></div>
+    <button class="btn btn-secondary hidden" id="expand-limit-btn" style="font-size:12px;padding:6px 10px;margin-bottom:8px;">Expand Limit +20 (5 credits)</button>
+    <div class="form-status" id="products-status"></div>
+    <div class="product-list" id="product-list"></div>
+
+    <!-- Product Form (hidden by default) -->
+    <div class="product-form" id="product-form">
+      <h3 id="form-title">Add Product</h3>
+      <input type="hidden" id="edit-product-id" value="">
+
+      <div class="form-row">
+        <label for="p-name" class="required">Product Name</label>
+        <input type="text" id="p-name" maxlength="100" placeholder="e.g. MyAwesomeTool">
+        <div class="char-counter"><span id="p-name-count">0</span>/100</div>
+      </div>
+
+      <div class="form-row">
+        <label for="p-link">Link</label>
+        <p class="hint">Chrome Web Store URL, website, etc.</p>
+        <input type="text" id="p-link" maxlength="500" placeholder="https://...">
+        <div class="char-counter"><span id="p-link-count">0</span>/500</div>
+      </div>
+
+      <div class="form-row">
+        <label for="p-features" class="required">Features / Description</label>
+        <p class="hint">What does the product do? The AI uses this to write relevant comments.</p>
+        <textarea id="p-features" maxlength="2000" rows="3" placeholder="Key features, capabilities..."></textarea>
+        <div class="char-counter"><span id="p-features-count">0</span>/2000</div>
+      </div>
+
+      <div class="ai-generate-row" id="ai-generate-row">
+        <button class="btn-ai" id="generate-meta-btn">Generate with AI</button>
+        <p class="ai-hint">Auto-fill benefits, scenarios, subreddits &amp; keywords</p>
+      </div>
+
+      <div class="ai-fields-section" id="ai-fields-section">
+        <div class="ai-fields-header">
+          <span>AI-Generated Fields</span>
+          <button class="btn-regen" id="regenerate-meta-btn">Regenerate</button>
+        </div>
+
+        <div class="form-row">
+          <label for="p-benefits">Benefits</label>
+          <p class="hint">What problems does it solve?</p>
+          <textarea id="p-benefits" maxlength="1000" rows="2" placeholder="Saves time, automates..."></textarea>
+          <div class="char-counter"><span id="p-benefits-count">0</span>/1000</div>
+        </div>
+
+        <div class="form-row">
+          <label for="p-scenarios">Scenarios</label>
+          <p class="hint">When should the AI mention this product?</p>
+          <textarea id="p-scenarios" maxlength="1000" rows="2" placeholder="Discussions about..."></textarea>
+          <div class="char-counter"><span id="p-scenarios-count">0</span>/1000</div>
+        </div>
+
+        <div class="form-row">
+          <label for="p-subreddits">Subreddits</label>
+          <p class="hint">Comma-separated. Auto-selects product on these subreddits.</p>
+          <input type="text" id="p-subreddits" placeholder="e.g. etsy, etsysellers">
+        </div>
+
+        <div class="form-row">
+          <label for="p-keywords">Keywords</label>
+          <p class="hint">Comma-separated. Auto-selects when post matches.</p>
+          <input type="text" id="p-keywords" placeholder="e.g. bulk listing, SEO">
+        </div>
+
+        <div class="form-row">
+          <label for="p-concepts">Search Concepts</label>
+          <p class="hint">Comma-separated phrases for finding relevant Reddit posts.</p>
+          <input type="text" id="p-concepts" placeholder="e.g. need bulk tool, listing optimization">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" id="save-product-btn" disabled>Save</button>
+        <button class="btn btn-secondary" id="cancel-product-btn">Cancel</button>
+      </div>
+      <div class="form-status" id="form-status"></div>
+    </div>
+
     </div>
   </div>
 

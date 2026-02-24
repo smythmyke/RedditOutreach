@@ -5,18 +5,13 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #f56040;
-  color: #fff;
+  background: transparent;
   border: none;
+  padding: 0;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 999999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: 700;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -225,6 +220,152 @@ shreddit-comment.ro-highlight {
   border-color: #f56040;
 }
 
+/* Quick-add / edit product buttons */
+.ro-add-product-btn,
+.ro-edit-product-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #9a9a9a;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.ro-edit-product-btn {
+  font-size: 14px;
+}
+
+.ro-add-product-btn:hover,
+.ro-edit-product-btn:hover {
+  background: #343536;
+  color: #d7dadc;
+  border-color: #f56040;
+}
+
+/* Quick-add product form */
+.ro-quick-add-form {
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 12px;
+  flex-shrink: 0;
+}
+
+.ro-quick-add-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f56040;
+  margin-bottom: 10px;
+}
+
+.ro-quick-add-field {
+  margin-bottom: 8px;
+}
+
+.ro-quick-add-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9a9a9a;
+  margin-bottom: 4px;
+}
+
+.ro-required {
+  color: #f56040;
+}
+
+.ro-quick-add-field input,
+.ro-quick-add-field textarea {
+  width: 100%;
+  background: #1a1a1b;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+}
+
+.ro-quick-add-field input:focus,
+.ro-quick-add-field textarea:focus {
+  border-color: #f56040;
+}
+
+.ro-quick-add-field textarea {
+  resize: vertical;
+  min-height: 56px;
+}
+
+.ro-quick-add-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ro-quick-add-actions .ro-btn {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.ro-quick-add-error {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ff6b6b;
+}
+
+/* AI generate in quick form */
+.ro-quick-add-form .ro-btn-ai {
+  width: 100%;
+  padding: 7px;
+  border: 1px dashed #f56040;
+  border-radius: 6px;
+  background: transparent;
+  color: #f56040;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background 0.15s;
+}
+.ro-quick-add-form .ro-btn-ai:hover { background: rgba(245, 96, 64, 0.1); }
+.ro-quick-add-form .ro-btn-ai:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ro-quick-add-form .ro-ai-fields { display: none; }
+.ro-quick-add-form .ro-ai-fields.show { display: block; }
+
+.ro-quick-add-form .ro-field-hint {
+  font-size: 10px;
+  color: #6a6a6a;
+  margin-bottom: 3px;
+}
+
+/* Activity Badge */
+.ro-activity-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: #272729;
+  border: 1px solid #343536;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.ro-activity-green { color: #46d160; }
+.ro-activity-yellow { color: #e0a030; border-color: #5a4020; }
+.ro-activity-red { color: #ff4444; font-weight: 800; border-color: #5a2020; background: #2a1515; }
+
 /* Credits Badge */
 .ro-credits-badge {
   display: flex;
@@ -334,8 +475,7 @@ shreddit-comment.ro-highlight {
 
 .ro-textarea {
   width: 100%;
-  min-height: 240px;
-  flex: 1;
+  min-height: 120px;
   background: #272729;
   color: #d7dadc;
   border: 1px solid #343536;
@@ -344,8 +484,9 @@ shreddit-comment.ro-highlight {
   font-size: 14px;
   line-height: 1.5;
   font-family: inherit;
-  resize: vertical;
+  resize: none;
   outline: none;
+  overflow: hidden;
 }
 
 .ro-textarea:focus {
@@ -367,13 +508,17 @@ shreddit-comment.ro-highlight {
 }
 
 .ro-btn {
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
   font-family: inherit;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.15s;
 }
 
@@ -393,9 +538,10 @@ shreddit-comment.ro-highlight {
 }
 
 .ro-btn-secondary {
-  background: #272729;
-  color: #d7dadc;
-  border: 1px solid #343536;
+  background: #343536;
+  color: #fff;
+  border: 1px solid #4a4a4c;
+  flex: 1;
 }
 
 .ro-toast {
@@ -493,6 +639,151 @@ shreddit-comment.ro-replied {
   padding-left: 8px;
 }
 
+/* === Post Mode === */
+
+.ro-post-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.ro-post-style-row,
+.ro-post-type-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #9a9a9a;
+}
+
+.ro-post-style-row > label,
+.ro-post-type-row > label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ro-post-style-group,
+.ro-post-type-group {
+  display: flex;
+  gap: 8px;
+}
+
+.ro-post-style-btn,
+.ro-post-type-btn {
+  flex: 1;
+  padding: 9px 14px;
+  border-radius: 20px;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #9a9a9a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+}
+
+.ro-post-style-btn:hover,
+.ro-post-type-btn:hover:not(:disabled) {
+  border-color: #9a9a9a;
+  color: #d7dadc;
+}
+
+.ro-post-style-btn.ro-active,
+.ro-post-type-btn.ro-active {
+  background: #f56040;
+  border-color: #f56040;
+  color: #fff;
+}
+
+.ro-post-type-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ro-post-generate-btn {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 16px;
+  min-height: 40px;
+}
+
+/* Post results */
+.ro-post-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.ro-post-tone-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.ro-post-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9a9a9a;
+  margin-top: 4px;
+}
+
+.ro-post-title-display {
+  width: 100%;
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.ro-post-title-display:focus {
+  border-color: #f56040;
+}
+
+.ro-post-body-display {
+  width: 100%;
+  flex: 1;
+  min-height: 160px;
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.ro-post-body-display:focus {
+  border-color: #f56040;
+}
+
+/* Post footer */
+.ro-post-footer {
+  padding: 12px 20px 24px;
+  border-top: 1px solid #343536;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 /* === Responsive Panel === */
 @media (max-width: 480px) {
   .ro-panel {
@@ -531,7 +822,11 @@ shreddit-comment.ro-replied {
 .ro-close-btn:focus-visible,
 .ro-tone-tab:focus-visible,
 .ro-btn:focus-visible,
-.ro-project-select:focus-visible {
+.ro-project-select:focus-visible,
+.ro-add-product-btn:focus-visible,
+.ro-edit-product-btn:focus-visible,
+.ro-post-style-btn:focus-visible,
+.ro-post-type-btn:focus-visible {
   outline: 2px solid #f56040;
   outline-offset: 2px;
 }
@@ -542,4 +837,732 @@ shreddit-comment.ro-clickable:focus-visible,
   outline: 2px dashed #f56040;
   outline-offset: -2px;
   border-radius: 8px;
+}
+
+/* === Facebook Groups === */
+
+/* FAB positioning on Facebook (light-themed site) */
+.ro-fb-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  z-index: 999999;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ro-fb-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.ro-fb-fab:active {
+  transform: scale(0.96);
+}
+
+.ro-fb-fab:focus-visible {
+  outline: 2px solid #f56040;
+  outline-offset: 2px;
+}
+
+/* Highlight detected post on Facebook */
+.ro-fb-highlight {
+  outline: 2px dashed #f56040 !important;
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+/* Interactive posts on the page when panel is open */
+.ro-fb-interactive {
+  cursor: pointer !important;
+  transition: outline 0.15s;
+}
+
+.ro-fb-interactive:hover {
+  outline: 2px dashed #f56040 !important;
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+/* Currently selected post on the page */
+.ro-fb-selected {
+  outline: 2px solid #f56040 !important;
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+/* In-panel post list container */
+.ro-fb-post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Individual post card */
+.ro-fb-post-card {
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.ro-fb-post-card:hover {
+  border-color: #4a4a4c;
+}
+
+.ro-fb-post-card-author {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d7dadc;
+  margin-bottom: 3px;
+}
+
+.ro-fb-post-card-preview {
+  font-size: 12px;
+  color: #9a9a9a;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+/* Product badge pills */
+.ro-fb-post-card-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ro-fb-product-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+/* Empty / no-matches state */
+.ro-fb-empty-state {
+  text-align: center;
+  padding: 30px 16px;
+  color: #6a6a6a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ro-fb-empty-state-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9a9a9a;
+  margin-bottom: 8px;
+}
+
+/* Back-to-list link in ready state */
+.ro-fb-back-to-list {
+  background: none;
+  border: none;
+  color: #f56040;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+.ro-fb-back-to-list:hover {
+  opacity: 0.8;
+}
+
+/* Instruction text at top of post list */
+.ro-fb-instruction {
+  text-align: center;
+  padding: 16px;
+  color: #9a9a9a;
+  font-size: 13px;
+  line-height: 1.5;
+  border-bottom: 1px solid #343536;
+  margin-bottom: 4px;
+}
+
+.ro-fb-instruction strong {
+  color: #d7dadc;
+}
+
+/* === Search Mode === */
+
+/* Mode tabs (Generate / Search) */
+.ro-mode-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #343536;
+  flex-shrink: 0;
+  margin: -16px -20px 0;
+  padding: 0 20px;
+}
+
+.ro-mode-tab {
+  flex: 1;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #9a9a9a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  text-align: center;
+}
+
+.ro-mode-tab:hover {
+  color: #d7dadc;
+}
+
+.ro-mode-tab.ro-active {
+  color: #f56040;
+  border-bottom-color: #f56040;
+}
+
+/* Generate content container */
+.ro-generate-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Search content container */
+.ro-search-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Search config */
+.ro-search-config {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Product chips (multi-select) */
+.ro-search-products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ro-search-product-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #9a9a9a;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ro-search-product-chip:hover {
+  border-color: #9a9a9a;
+  color: #d7dadc;
+}
+
+.ro-search-product-chip.ro-selected {
+  background: #f56040;
+  border-color: #f56040;
+  color: #fff;
+}
+
+/* Concepts accordion */
+.ro-concepts-section {
+  flex-shrink: 0;
+}
+
+.ro-concepts-product {
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+.ro-concepts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #d7dadc;
+  user-select: none;
+}
+
+.ro-concepts-header:hover {
+  background: #343536;
+}
+
+.ro-concepts-toggle {
+  font-size: 10px;
+  color: #9a9a9a;
+  transition: transform 0.15s;
+}
+
+.ro-concepts-product.ro-expanded .ro-concepts-toggle {
+  transform: rotate(90deg);
+}
+
+.ro-concepts-body {
+  display: none;
+  padding: 0 12px 10px;
+}
+
+.ro-concepts-product.ro-expanded .ro-concepts-body {
+  display: block;
+}
+
+/* Concept tags */
+.ro-concepts-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.ro-concept-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #343536;
+  color: #d7dadc;
+  font-size: 11px;
+  font-family: inherit;
+  border: none;
+}
+
+.ro-concept-tag .ro-concept-remove {
+  background: none;
+  border: none;
+  color: #9a9a9a;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.ro-concept-tag .ro-concept-remove:hover {
+  color: #ff6b6b;
+}
+
+/* AI suggestion tags (dashed border) */
+.ro-concept-suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px dashed #f56040;
+  background: transparent;
+  color: #f56040;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ro-concept-suggestion:hover {
+  background: rgba(245, 96, 64, 0.1);
+}
+
+.ro-concepts-input-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.ro-concepts-input {
+  flex: 1;
+  background: #1a1a1b;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+
+.ro-concepts-input:focus {
+  border-color: #f56040;
+}
+
+.ro-concepts-add-btn,
+.ro-concepts-suggest-btn {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #9a9a9a;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ro-concepts-add-btn:hover,
+.ro-concepts-suggest-btn:hover {
+  border-color: #f56040;
+  color: #f56040;
+}
+
+.ro-concepts-suggest-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ro-concepts-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* Search settings row */
+.ro-search-settings {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.ro-search-settings label {
+  font-size: 11px;
+  color: #9a9a9a;
+  white-space: nowrap;
+}
+
+.ro-search-settings select {
+  background: #272729;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 11px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+}
+
+.ro-search-settings select:focus {
+  border-color: #f56040;
+}
+
+/* Auto-search toggle */
+.ro-auto-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #9a9a9a;
+  flex-shrink: 0;
+}
+
+.ro-toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: #343536;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.ro-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #9a9a9a;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.ro-toggle.ro-on {
+  background: #f56040;
+}
+
+.ro-toggle.ro-on::after {
+  transform: translateX(16px);
+  background: #fff;
+}
+
+/* Search button */
+.ro-search-go-btn {
+  width: 100%;
+  padding: 10px 16px;
+  min-height: 40px;
+  flex-shrink: 0;
+}
+
+/* Search loading */
+.ro-search-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 30px 0;
+  color: #9a9a9a;
+  font-size: 13px;
+}
+
+.ro-search-progress {
+  font-size: 11px;
+  color: #6a6a6a;
+}
+
+/* Search results */
+.ro-search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Filter chips */
+.ro-search-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.ro-search-filter-chip {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid #343536;
+  background: #272729;
+  color: #9a9a9a;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ro-search-filter-chip:hover {
+  border-color: #9a9a9a;
+}
+
+.ro-search-filter-chip.ro-active {
+  background: #f56040;
+  border-color: #f56040;
+  color: #fff;
+}
+
+/* Result card */
+.ro-search-card {
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: default;
+  transition: border-color 0.15s;
+}
+
+.ro-search-card:hover {
+  border-color: #4a4a4c;
+}
+
+.ro-search-card.ro-skipped {
+  opacity: 0.4;
+}
+
+.ro-search-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.ro-search-card-sub {
+  font-size: 11px;
+  color: #9a9a9a;
+  font-weight: 600;
+}
+
+.ro-search-card-age {
+  font-size: 10px;
+  color: #6a6a6a;
+}
+
+.ro-search-card-product {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: #343536;
+  color: #d7dadc;
+  margin-left: auto;
+}
+
+.ro-relevance {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.ro-relevance-high {
+  background: #1a3a1a;
+  color: #46d160;
+}
+
+.ro-relevance-medium {
+  background: #2a2a0f;
+  color: #e0c030;
+}
+
+.ro-relevance-low {
+  background: #272729;
+  color: #9a9a9a;
+}
+
+.ro-search-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d7dadc;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ro-search-card-preview {
+  font-size: 12px;
+  color: #9a9a9a;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.ro-search-card-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #6a6a6a;
+}
+
+.ro-search-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.ro-search-card-actions button {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid #343536;
+  background: #1a1a1b;
+  color: #9a9a9a;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ro-search-card-actions button:hover {
+  border-color: #f56040;
+  color: #f56040;
+}
+
+.ro-search-card-actions .ro-btn-open {
+  background: #f56040;
+  border-color: #f56040;
+  color: #fff;
+}
+
+.ro-search-card-actions .ro-btn-open:hover {
+  opacity: 0.85;
+}
+
+/* Results footer */
+.ro-search-results-footer {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+  flex-shrink: 0;
+}
+
+.ro-search-results-footer button {
+  flex: 1;
+}
+
+/* Empty state */
+.ro-search-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: #6a6a6a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ro-search-empty-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9a9a9a;
+  margin-bottom: 8px;
+}
+
+/* Focus visible for search elements */
+.ro-mode-tab:focus-visible,
+.ro-search-product-chip:focus-visible,
+.ro-concept-tag .ro-concept-remove:focus-visible,
+.ro-concept-suggestion:focus-visible,
+.ro-toggle:focus-visible,
+.ro-search-filter-chip:focus-visible {
+  outline: 2px solid #f56040;
+  outline-offset: 2px;
 }

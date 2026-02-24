@@ -1,13 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Marketeer",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuPgPmcla48PDsnBqjg94MCnFkt7IDWw8tX/qKi9mIWXhyE4UWzgiEq/NXtTFDvExI0Tl+OPR7cLbmwfVcr5JmKL+OtA51jpmMceMTCZObUFQjYNQ6pdbxk+3Di6g/SD8BxSji6mD9VbTWTILom4AFzLoy62YNwYZOvhcIOtfZfpUu9UXjfmrf5M9NOOCcoGFHT8I/Ku2VUz803CfU22orMf/d+bWeLYK46TlAQt+sWjNrPfgqIVHiJV5wkrsFc+9kjYeKCYN2+gl0Q5LyYGQJkFGhmew24+s8n5haOTIfzJ+CH28zaz+V0E1dLOitylgtkGS93iU1pQ/+y4bHNR1bwIDAQAB",
-  "version": "1.2.0",
-  "description": "AI-powered Reddit response drafting tool. Generate contextual comment drafts in multiple tones.",
-  "permissions": ["activeTab", "storage", "identity"],
+  "name": "Reddit AI Comment & Reply Tool: Lead Gen, Multi-Tone Drafts | Marketeer",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtZ49ikimAJULJUWjwg32GmdXhcfPO8gcwHt7COQmpylqVNQUysRofUdFI6EK6ygJDB6rTZ2dfiEJA72KsHY+engoZwuXsiS48nvE7Nt0mrGVZmeqrz9sWxuZAl4afAwR71Bsb7f8C2p6LZ339q37f190tJR2ZnL4W/BpUD04lLMA9NPJmO3lEp2b+sY8/meFNxOBdu2DXDzvI5xWgKrPvUBPfT1jXl4X1psIaxxlLz6PuQIZPlCk+2c35YiBzQfscfiXbmavDQ9BtE3Y9EkiJtuUxZlTn0L2tNZzpFSlNicbD17DP5pA0a95mnButxUcI/WAfguZXpNWUJgLaALb/QIDAQAB",
+  "version": "1.3.1",
+  "description": "AI-powered Reddit comment & reply generator. Draft responses in 5 tones, promote products naturally, respect subreddit rules.",
+  "permissions": ["activeTab", "storage", "identity", "alarms"],
   "host_permissions": [
     "https://business-search-api-815700675676.us-central1.run.app/*",
-    "https://www.googleapis.com/*"
+    "https://www.googleapis.com/*",
+    "https://www.reddit.com/*",
+    "https://www.facebook.com/*"
   ],
   "oauth2": {
     "client_id": "815700675676-303cc9bumebnug1v1gre9cibqdarkqi3.apps.googleusercontent.com",
@@ -37,6 +39,15 @@
       "js": ["config.js", "content/reddit.js"],
       "css": ["content/styles.css"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/groups/*",
+        "https://www.facebook.com/search/*"
+      ],
+      "js": ["config.js", "content/facebook.js"],
+      "css": ["content/styles.css"],
+      "run_at": "document_idle"
     }
   ],
   "options_ui": {
@@ -53,8 +64,8 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["docs/*"],
-      "matches": ["https://www.reddit.com/*", "https://old.reddit.com/*"]
+      "resources": ["docs/*", "icons/fab-icon.png"],
+      "matches": ["https://www.reddit.com/*", "https://old.reddit.com/*", "https://www.facebook.com/*"]
     }
   ]
 }

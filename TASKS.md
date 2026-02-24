@@ -20,7 +20,7 @@ These cannot be automated and must be done by the developer:
 | M7 | Choose a new extension name (no "Reddit" trademark) | Task 35. Renamed to "Marketeer". | Done |
 | M8 | Install `helmet` and `morgan` in backend | Installed via npm. | Done |
 | M9 | Set `SCHEDULER_SECRET` env var on Cloud Run | Set with random token. | Done |
-| M10 | Set `ALLOWED_EXTENSION_IDS` env var on Cloud Run | Set to `kmjagkblgiammdhaejiojajiibmlmcbl`. | Done |
+| M10 | Set `ALLOWED_EXTENSION_IDS` env var on Cloud Run | Set to `eipifhbdaempeaeohmcfnldmiciofbib` (CWS ID) + legacy IDs. | Done |
 
 ---
 

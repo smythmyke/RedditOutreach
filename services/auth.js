@@ -32,29 +32,38 @@ class AuthService {
   }
 
   async signIn() {
+    console.log('[Marketeer Auth] signIn() started');
+
     // Step 1: Get Google OAuth token via chrome.identity
+    console.log('[Marketeer Auth] Step 1: Getting Google OAuth token...');
     const token = await new Promise((resolve, reject) => {
       chrome.identity.getAuthToken({ interactive: true }, (token) => {
         if (chrome.runtime.lastError) {
+          console.error('[Marketeer Auth] chrome.identity.getAuthToken error:', chrome.runtime.lastError.message);
           reject(new Error(chrome.runtime.lastError.message));
           return;
         }
+        console.log('[Marketeer Auth] Got OAuth token:', token ? 'yes (' + token.slice(0, 10) + '...)' : 'null');
         resolve(token);
       });
     });
 
     // Step 2: Get user profile from Google
+    console.log('[Marketeer Auth] Step 2: Fetching Google user info...');
     const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: `Bearer ${token}` }
     });
 
     if (!userInfoResponse.ok) {
+      console.error('[Marketeer Auth] Google userinfo failed:', userInfoResponse.status);
       throw new Error(`Failed to get user info from Google (${userInfoResponse.status})`);
     }
 
     const userInfo = await userInfoResponse.json();
+    console.log('[Marketeer Auth] Got user info:', userInfo.email);
 
     // Step 3: Register/authenticate with backend
+    console.log('[Marketeer Auth] Step 3: Authenticating with backend...');
     const authResponse = await fetch(`${AUTH_API_BASE}/api/auth/google`, {
       method: 'POST',
       headers: {
@@ -72,10 +81,12 @@ class AuthService {
 
     if (!authResponse.ok) {
       const errText = await authResponse.text().catch(() => '');
-      throw new Error(`Failed to authenticate with backend (${authResponse.status})`);
+      console.error('[Marketeer Auth] Backend auth failed:', authResponse.status, errText);
+      throw new Error(`Failed to authenticate with backend (${authResponse.status}): ${errText}`);
     }
 
     const authData = await authResponse.json();
+    console.log('[Marketeer Auth] Backend auth success, token:', authData.token ? 'yes' : 'no');
 
     this.user = {
       email: userInfo.email,
