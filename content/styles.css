@@ -447,6 +447,7 @@ shreddit-comment.ro-highlight {
   gap: 6px;
   flex-wrap: wrap;
   flex-shrink: 0;
+  justify-content: center;
 }
 
 .ro-tone-tab {
@@ -649,7 +650,8 @@ shreddit-comment.ro-replied {
 }
 
 .ro-post-style-row,
-.ro-post-type-row {
+.ro-post-type-row,
+.ro-post-comparison-row {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -658,19 +660,22 @@ shreddit-comment.ro-replied {
 }
 
 .ro-post-style-row > label,
-.ro-post-type-row > label {
+.ro-post-type-row > label,
+.ro-post-comparison-row > label {
   font-size: 12px;
   font-weight: 600;
 }
 
 .ro-post-style-group,
-.ro-post-type-group {
+.ro-post-type-group,
+.ro-post-comparison-group {
   display: flex;
   gap: 8px;
 }
 
 .ro-post-style-btn,
-.ro-post-type-btn {
+.ro-post-type-btn,
+.ro-post-comparison-btn {
   flex: 1;
   padding: 9px 14px;
   border-radius: 20px;
@@ -690,13 +695,15 @@ shreddit-comment.ro-replied {
 }
 
 .ro-post-style-btn:hover,
-.ro-post-type-btn:hover:not(:disabled) {
+.ro-post-type-btn:hover:not(:disabled),
+.ro-post-comparison-btn:hover {
   border-color: #9a9a9a;
   color: #d7dadc;
 }
 
 .ro-post-style-btn.ro-active,
-.ro-post-type-btn.ro-active {
+.ro-post-type-btn.ro-active,
+.ro-post-comparison-btn.ro-active {
   background: #f56040;
   border-color: #f56040;
   color: #fff;
@@ -826,7 +833,8 @@ shreddit-comment.ro-replied {
 .ro-add-product-btn:focus-visible,
 .ro-edit-product-btn:focus-visible,
 .ro-post-style-btn:focus-visible,
-.ro-post-type-btn:focus-visible {
+.ro-post-type-btn:focus-visible,
+.ro-post-comparison-btn:focus-visible {
   outline: 2px solid #f56040;
   outline-offset: 2px;
 }
@@ -1014,12 +1022,12 @@ shreddit-comment.ro-clickable:focus-visible,
   border-bottom: 1px solid #343536;
   flex-shrink: 0;
   margin: -16px -20px 0;
-  padding: 0 20px;
+  padding: 8px 20px 0;
 }
 
 .ro-mode-tab {
   flex: 1;
-  padding: 10px 0;
+  padding: 10px 0 14px;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;

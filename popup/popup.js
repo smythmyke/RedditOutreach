@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       console.log('[Marketeer Popup] Active tab:', tab?.id, tab?.url?.slice(0, 80));
-      const isReddit = tab && tab.url && tab.url.match(/reddit\.com\/r\/\w+\/(comments|submit)\//);
+      const isReddit = tab && tab.url && (tab.url.match(/reddit\.com\/r\/\w+\/(comments|submit)\//) || tab.url.match(/reddit\.com\/submit/));
       const isFacebookGroup = tab && tab.url && tab.url.match(/facebook\.com\/groups\//);
       if (!isReddit && !isFacebookGroup) {
         console.log('[Marketeer Popup] Not a supported page');

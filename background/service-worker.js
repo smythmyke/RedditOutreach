@@ -396,7 +396,7 @@ async function handleGenerateAllFacebook(postData, projectId, product) {
   }
 }
 
-async function handleGeneratePost({ subreddit, projectId, product, postStyle, postType, subredditRules }) {
+async function handleGeneratePost({ subreddit, projectId, product, postStyle, postType, comparisonMode, subredditRules }) {
   console.log('[Marketeer] handleGeneratePost called:', { subreddit, projectId, postStyle, postType, hasProduct: !!product });
 
   const token = await getAuthToken();
@@ -426,6 +426,7 @@ async function handleGeneratePost({ subreddit, projectId, product, postStyle, po
     tones: CONFIG.TONES,
     postStyle: postStyle || 'question',
     postType: postType || 'text',
+    comparisonMode: comparisonMode || undefined,
     projectId: projectId || 'none',
     subredditRules: truncate(subredditRules || '', 3000)
   };

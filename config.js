@@ -34,11 +34,17 @@ const CONFIG = {
   MAX_SEARCH_QUERIES: 10,
 
   // Post generation
-  POST_STYLES: ['question', 'discussion', 'story'],
+  POST_STYLES: ['question', 'discussion', 'story', 'comparison'],
   POST_STYLE_LABELS: {
     question: 'Question',
     discussion: 'Discussion',
-    story: 'Story'
+    story: 'Story',
+    comparison: 'Comparison'
+  },
+  COMPARISON_MODES: ['soft', 'open'],
+  COMPARISON_MODE_LABELS: {
+    soft: 'Soft Recommend',
+    open: 'Open-Ended'
   },
   POST_TYPES: ['text', 'link'],
   POST_TYPE_LABELS: {

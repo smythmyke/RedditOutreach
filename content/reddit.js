@@ -24,7 +24,7 @@
   }
 
   function isSubmitPage() {
-    const result = /\/r\/[^/]+\/submit\/?/.test(location.pathname);
+    const result = /^\/submit\/?/.test(location.pathname) || /\/r\/[^/]+\/submit\/?/.test(location.pathname);
     if (result) console.log('[Marketeer] isSubmitPage: true', location.pathname);
     return result;
   }
@@ -497,6 +497,7 @@
   let postResponses = {}; // { tone: { title, body } }
   let activePostStyle = 'question';
   let activePostType = 'text';
+  let activeComparisonMode = 'soft';
 
   function buildProjectOptionsHtml() {
     let html = '<option value="none">No Product</option>';
@@ -640,6 +641,12 @@
               <label>Style:</label>
               <div class="ro-post-style-group">
                 ${CONFIG.POST_STYLES.map(s => `<button class="ro-post-style-btn${s === 'question' ? ' ro-active' : ''}" data-style="${s}">${CONFIG.POST_STYLE_LABELS[s]}</button>`).join('')}
+              </div>
+            </div>
+            <div class="ro-post-comparison-row" style="display:none">
+              <label>Mode:</label>
+              <div class="ro-post-comparison-group">
+                ${CONFIG.COMPARISON_MODES.map(m => `<button class="ro-post-comparison-btn${m === 'soft' ? ' ro-active' : ''}" data-mode="${m}">${CONFIG.COMPARISON_MODE_LABELS[m]}</button>`).join('')}
               </div>
             </div>
             <div class="ro-post-type-row">
@@ -1011,6 +1018,14 @@
       if (styleBtn) {
         activePostStyle = styleBtn.dataset.style;
         panel.querySelectorAll('.ro-post-style-btn').forEach(b => b.classList.toggle('ro-active', b === styleBtn));
+        // Show/hide comparison mode row
+        const compRow = panel.querySelector('.ro-post-comparison-row');
+        if (compRow) compRow.style.display = activePostStyle === 'comparison' ? '' : 'none';
+      }
+      const compBtn = e.target.closest('.ro-post-comparison-btn');
+      if (compBtn) {
+        activeComparisonMode = compBtn.dataset.mode;
+        panel.querySelectorAll('.ro-post-comparison-btn').forEach(b => b.classList.toggle('ro-active', b === compBtn));
       }
       const typeBtn = e.target.closest('.ro-post-type-btn');
       if (typeBtn && !typeBtn.disabled) {
@@ -1877,6 +1892,16 @@
     const projectId = panel.querySelector('.ro-project-select').value;
     const product = getSelectedProduct();
 
+    if (activePostStyle === 'comparison' && (!product || projectId === 'none')) {
+      loadingEl.style.display = 'none';
+      genBtn.disabled = false;
+      fillBtn.disabled = false;
+      regenBtn.disabled = false;
+      if (fab) fab.classList.remove('ro-loading');
+      showToast('Comparison style requires a product selected', 'error');
+      return;
+    }
+
     console.log('[Marketeer] generatePost:', { subreddit, projectId, postStyle: activePostStyle, postType: activePostType, hasProduct: !!product });
 
     try {
@@ -1888,6 +1913,7 @@
           product,
           postStyle: activePostStyle,
           postType: activePostType,
+          comparisonMode: activePostStyle === 'comparison' ? activeComparisonMode : undefined,
           subredditRules
         },
         (response) => {
